@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MPSReader.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="StringTokenizer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="FObjetivo.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Restricao.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Variavel.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadro.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexSolver.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexGPU.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FObjetivo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Variavel.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Restricao.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MPSReader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StringTokenizer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadro.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexSolver.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexParallelFunctions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexGPUKernels.cuh">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexGPU.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="kernel.cu">
+      <Filter>GPU Controller</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SimplexGPUKernels.cu">
+      <Filter>GPU Controller</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{db8632b8-4650-41b9-a462-ec327e97019b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{a978e68d-62c5-4b05-9ead-30b9986c4489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GPU Controller">
+      <UniqueIdentifier>{3f5584b8-8742-4a74-aed2-2ce98909bc57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MPS File">
+      <UniqueIdentifier>{d3c402dd-29f5-4b37-b17c-4fab07282ea1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\MPS_Test.txt">
+      <Filter>MPS File</Filter>
+    </None>
+    <None Include="..\MPS_Petr_Exemplo.txt">
+      <Filter>MPS File</Filter>
+    </None>
+  </ItemGroup>
+</Project>

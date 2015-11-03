@@ -1,0 +1,18 @@
+NAME          PETR_EXEMPLO
+ROWS
+ N  COST
+ L  REST1
+ G  REST2
+ G  REST3
+COLUMNS
+    XONE      COST                 6   REST1                 0.6
+    XONE      REST2                1
+    XTWO      COST                12   REST1                 1
+    XTWO      REST2                1   REST3                 1
+RHS
+    RHS1      REST1              600   REST2               300
+    RHS1      REST3              100
+BOUNDS
+ LO BND1      XONE                 0
+ LO BND1      XTWO                 0
+ENDATA
