@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace SimplexSolver.CS.Interfaces
 {
-  interface ISimplexSolver
+  public interface ILPReader
   {
-
-    void Otimizar(ILPReader reader);
-
-    void Otimizar(FObjetivo funcao);
-
+    FObjetivo LerFuncaoObjetivo();
   }
 }

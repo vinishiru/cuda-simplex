@@ -10,5 +10,11 @@ namespace SimplexSolver.CS.Dados
   {
     public double ValorSuperior { get; set; }
     public double ValorInferior { get; set; }
+
+    public Celula()
+    {
+      //valor setado propositalmente para controle do algoritmo
+      ValorInferior = Double.NaN;
+    }
   }
 }

@@ -17,13 +17,14 @@ namespace SimplexSolver.CS.Dados
     //Armazena o termo livre da função
     public Dictionary<string, Restricao> Restricoes { get; set; }
     //Conjunto de restrições da função
-    public Extremo Extr { get; set; }
+    public Extremo Extremo { get; set; }
     //Tipo de otimização a ser realizada.
     public bool Normalizado { get; set; }
     //Flag para saber se a função está normalizada (forma padrão)
 
     public FObjetivo()
     {
+      this.Extremo = Dados.Extremo.Minimizar;
       this.Variaveis = new Dictionary<string, Variavel>();
       this.VariaveisBasicas = new Dictionary<string, Variavel>();
       this.Restricoes = new Dictionary<string, Restricao>();
@@ -70,7 +71,7 @@ namespace SimplexSolver.CS.Dados
     public void AddVariavelRestricao(string restName, string varName, double varValue)
     {
       Restricao restricaoAux = this.RecuperarRestricao(restName);
-      restricaoAux.setVariavelValue(varName, varValue);
+      restricaoAux.addVariavel(varName, varValue);
     }
 
     public void SetDesigualdadeRestricao(string restName, Desigualdade desigualdade)
@@ -132,7 +133,7 @@ namespace SimplexSolver.CS.Dados
     public Variavel CriarVariavelBasica()
     {
 
-      string varName = "X" + Variaveis.Count + VariaveisBasicas.Count + 1;
+      string varName = string.Format("VB_{0}", Variaveis.Count + VariaveisBasicas.Count + 1);
 
       Variavel varAux = new Variavel();
       varAux.Nome = varName;
@@ -175,7 +176,7 @@ namespace SimplexSolver.CS.Dados
     {
       //Se for max
 
-      if (this.Extr == Extremo.Max)
+      if (this.Extremo == Extremo.Maximizar)
       {
         //Inverter sinal das variaveis da FO
         foreach (Variavel var in Variaveis.Values)

@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 namespace SimplexSolver.CS.Dados
 {
@@ -59,7 +61,7 @@ namespace SimplexSolver.CS.Dados
         }
         else
         {
-          LinhaHeader[i] = funcaoObj.VariaveisBasicas["X" + (i + funcaoObj.Variaveis.Count)].Nome;
+          LinhaHeader[i] = funcaoObj.VariaveisBasicas.ToList()[i - 1].Key;
         }
       }
 
@@ -110,71 +112,32 @@ namespace SimplexSolver.CS.Dados
       return this.Matriz != null ? this.Matriz.GetLength(1) : 0;
     }
 
-    //public Point PaintQuadroSimplex(Graphics g)
-    //{
+    public override string ToString()
+    {
 
-    //  g.Clear(Color.White);
+      StringBuilder builder = new StringBuilder();
 
+      //escrever os cabecalhos inicialmente
+      builder.Append(string.Concat("\t", string.Join("\t", this.ColunaHeader)));
 
-    //  //Pintar Coluna Headers
-    //  for (int i = 0; i <= ColunaHeader.Length - 1; i++)
-    //  {
-    //    CellGraph.PaintColHeaderGraphics(ColunaHeader(i), g, i, 0);
-    //  }
-    //  //Pintar Linha Headers
-    //  for (int i = 0; i <= LinhaHeader.Length - 1; i++)
-    //  {
-    //    CellGraph.PaintRowHeaderGraphics(LinhaHeader(i), g, 0, i);
-    //  }
+      builder.AppendLine();
 
-    //  //Pintar celulas
-    //  for (int i = 0; i <= Matriz.GetUpperBound(0); i++)
-    //  {
-    //    for (int j = 0; j <= Matriz.GetUpperBound(1); j++)
-    //    {
-    //      CellGraph.PaintCellGraphics(Matriz(i, j), g, j, i);
-    //    }
-    //  }
+      //escrever cabecalho da linha, seguido dos valores
+      for (int i = 0; i < this.TotalLinhas(); i++)
+      {
+        //imprimir cabecalho da linha
+        builder.Append(string.Concat(this.LinhaHeader[i], "\t"));
+        for (int j = 0; j < this.TotalColunas(); j++)
+        {
+          builder.Append(string.Concat(this.Matriz[i, j].ValorSuperior, "\t"));
+        }
 
-    //  return new Point(CellGraph.Max_X, CellGraph.Max_Y);
-    //}
+        //fim da linha
+        builder.AppendLine();
+      }
 
-
-    //public void deFlagAll()
-    //{
-    //  for (int i = 0; i <= Matriz.GetUpperBound(0); i++)
-    //  {
-    //    for (int j = 0; j <= Matriz.GetUpperBound(1); j++)
-    //    {
-    //      Matriz[i, j].Flag = false;
-    //      Matriz[i, j].FlagInferior = false;
-    //      Matriz[i, j].FlagSuperior = false;
-    //      Matriz[i, j].ValorInferior = 0.0;
-    //    }
-    //  }
-
-    //}
-
-
-    //public void FlagPermElement(int x_index, int y_index)
-    //{
-    //  //Desmarcar todas
-    //  this.deFlagAll();
-
-    //  for (int i = 0; i <= Matriz.GetUpperBound(0); i++)
-    //  {
-    //    for (int j = 0; j <= Matriz.GetUpperBound(1); j++)
-    //    {
-    //      if (i == x_index | j == y_index)
-    //      {
-    //        Matriz[i, j].Flag = true;
-    //      }
-    //    }
-    //  }
-    //  //Definir elemento permissivel
-    //  PermElemento = Matriz[x_index, y_index];
-    //  PermElementoPos = new Point(x_index, y_index);
-    //}
+      return builder.ToString();
+    }
 
   }
 }

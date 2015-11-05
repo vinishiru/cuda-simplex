@@ -24,7 +24,12 @@ namespace SimplexSolver.CS.Dados
     public bool Normalizado { get; set; }
     //Apenas uma variável de controle para saber se a função de restrição está normalizada (forma padrão)
 
-    public void setVariavelValue(string varName, double varValue)
+    public Restricao()
+    {
+      this.Variaveis = new Dictionary<string, Variavel>();
+    }
+
+    public void addVariavel(string varName, double varValue)
     {
       //Verificar se ja existe essa variavel na restriçao
       Variavel varAux = null;

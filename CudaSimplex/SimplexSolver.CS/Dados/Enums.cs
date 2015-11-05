@@ -8,8 +8,8 @@ namespace SimplexSolver.CS.Dados
 {
   public enum Extremo
   {
-    Min,
-    Max
+    Minimizar,
+    Maximizar
   }
 
   public enum Desigualdade
