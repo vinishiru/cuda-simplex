@@ -12,12 +12,10 @@ namespace SimplexSolver.CS.Dados
   public class Restricao
   {
 
-   
-
     //Propriedades que compõem uma função de restrição
     public Dictionary<string, Variavel> Variaveis { get; set; }
     //Conjunto de variáveis
-    public Relacionamento Relation { get; set; }
+    public Desigualdade Desigualdade { get; set; }
     //Um tipo de relacionamento
     public double TermoLivre { get; set; }
     //Valor do termo livre
@@ -45,11 +43,6 @@ namespace SimplexSolver.CS.Dados
       varAux.Coeficiente = varValue;
     }
 
-    public void deleteVariavel()
-    {
-      Variaveis.Remove("X" + Variaveis.Count);
-    }
-
     public override string ToString()
     {
 
@@ -70,7 +63,7 @@ namespace SimplexSolver.CS.Dados
           }
         }
 
-        if (this.Relation == Relacionamento.MaiorIgual)
+        if (this.Desigualdade == Desigualdade.MaiorOuIgual)
         {
           restString += " >= ";
         }

@@ -8,29 +8,28 @@ namespace SimplexSolver.CS.Dados
 {
   public class FObjetivo
   {
-
-
-
     //Propriedades que compõem uma função objetivo
     public Dictionary<string, Variavel> Variaveis { get; set; }
     //Conjunto de variaveis
-    public Dictionary<string, Variavel> VariaveisArtificiais { get; set; }
+    public Dictionary<string, Variavel> VariaveisBasicas { get; set; }
     //Conjunto de variaveis artificiais.
     public double TermoLivre { get; set; }
     //Armazena o termo livre da função
-    public Dictionary<int, Restricao> Restricoes { get; set; }
+    public Dictionary<string, Restricao> Restricoes { get; set; }
     //Conjunto de restrições da função
     public Extremo Extr { get; set; }
     //Tipo de otimização a ser realizada.
     public bool Normalizado { get; set; }
     //Flag para saber se a função está normalizada (forma padrão)
 
-    /// <summary>
-    /// Função que cria uma nova variável na função objetivo, dando seu nome baseando na quantidade de variáveis já existentes.
-    /// </summary>
-    /// <returns></returns>
-    /// <remarks></remarks>
-    public Variavel createNewVariavel()
+    public FObjetivo()
+    {
+      this.Variaveis = new Dictionary<string, Variavel>();
+      this.VariaveisBasicas = new Dictionary<string, Variavel>();
+      this.Restricoes = new Dictionary<string, Restricao>();
+    }
+
+    public Variavel AddVariavel()
     {
 
       string varName = "X" + Variaveis.Count + 1;
@@ -42,73 +41,47 @@ namespace SimplexSolver.CS.Dados
       return varAux;
     }
 
-
-    public void deleteVariavel()
-    {
-      Variaveis.Remove("X" + Variaveis.Count);
-    }
-
-    /// <summary>
-    /// Função que cria uma nova variável artificial, dando seu nome baseando na quantidade de variáveis da função objetivo e restrições
-    /// já existentes.
-    /// </summary>
-    /// <returns></returns>
-    /// <remarks></remarks>
-    public Variavel createNewVariavelArtificial()
+    public Variavel AddVariavel(string nome, double coeficiente)
     {
 
-      string varName = "X" + Variaveis.Count + VariaveisArtificiais.Count + 1;
+      Variavel varAux = new Variavel
+      {
+        Nome = nome,
+        Coeficiente = coeficiente
+      };
+      Variaveis.Add(nome, varAux);
 
-      Variavel varAux = new Variavel();
-      varAux.Nome = varName;
-      VariaveisArtificiais.Add(varName, varAux);
       return varAux;
     }
 
-    public void setVariavelValue(string varName, double varValue)
+    public Restricao AddRestricao()
     {
-      Variavel varAux = Variaveis[varName];
-      varAux.Coeficiente = varValue;
+      string restName = string.Format("REST_{0}", this.Restricoes.Count.ToString());
+      return AddRestricao(restName);
     }
 
-    private Restricao getRestricao(int index)
+    public Restricao AddRestricao(string restName)
     {
-      Restricao restricaoAux = null;
-
-      //Verificar se ja existe restriçao nesse indice, se nao existir, criar nova restriçao
-      if (!Restricoes.ContainsKey(index))
-      {
-        restricaoAux = new Restricao();
-        Restricoes.Add(index, restricaoAux);
-      }
-      else
-      {
-        restricaoAux = Restricoes[index];
-      }
-      return restricaoAux;
+      Restricao rest = new Restricao();
+      this.Restricoes.Add(restName, rest);
+      return rest;
     }
 
-
-    public void setRestricaoRelacionamentoValue(int index, Relacionamento rel)
+    public void AddVariavelRestricao(string restName, string varName, double varValue)
     {
-      Restricao restricaoAux = this.getRestricao(index);
-      restricaoAux.Relation = rel;
-
-    }
-
-
-    public void setRestricaoVariavelValue(int index, string varName, double varValue)
-    {
-      Restricao restricaoAux = this.getRestricao(index);
-
-      //Editar o valor alterado
+      Restricao restricaoAux = this.RecuperarRestricao(restName);
       restricaoAux.setVariavelValue(varName, varValue);
-
     }
 
-    public void setRestricaoTermoLivreValue(int index, double value)
+    public void SetDesigualdadeRestricao(string restName, Desigualdade desigualdade)
     {
-      Restricao restricaoAux = this.getRestricao(index);
+      Restricao restricaoAux = this.RecuperarRestricao(restName);
+      restricaoAux.Desigualdade = desigualdade;
+    }
+
+    public void SetTermoLivreRestricao(string restName, double value)
+    {
+      Restricao restricaoAux = this.RecuperarRestricao(restName);
       restricaoAux.TermoLivre = value;
     }
 
@@ -156,6 +129,16 @@ namespace SimplexSolver.CS.Dados
       return foString;
     }
 
+    public Variavel CriarVariavelBasica()
+    {
+
+      string varName = "X" + Variaveis.Count + VariaveisBasicas.Count + 1;
+
+      Variavel varAux = new Variavel();
+      varAux.Nome = varName;
+      VariaveisBasicas.Add(varName, varAux);
+      return varAux;
+    }
 
     public void normalizar()
     {
@@ -170,6 +153,23 @@ namespace SimplexSolver.CS.Dados
 
     }
 
+
+    private Restricao RecuperarRestricao(string restName)
+    {
+      Restricao restricaoAux = null;
+
+      //Verificar se ja existe restriçao nesse indice, se nao existir, criar nova restriçao
+      if (!Restricoes.ContainsKey(restName))
+      {
+        restricaoAux = new Restricao();
+        Restricoes.Add(restName, restricaoAux);
+      }
+      else
+      {
+        restricaoAux = Restricoes[restName];
+      }
+      return restricaoAux;
+    }
 
     private void normalizarExtremo()
     {
@@ -186,19 +186,18 @@ namespace SimplexSolver.CS.Dados
         //Inverter relacionamento das restricoes
         foreach (Restricao rest in Restricoes.Values)
         {
-          if (rest.Relation == Relacionamento.MaiorIgual)
+          if (rest.Desigualdade == Desigualdade.MaiorOuIgual)
           {
-            rest.Relation = Relacionamento.MenorIgual;
+            rest.Desigualdade = Desigualdade.MenorOuIgual;
           }
           else
           {
-            rest.Relation = Relacionamento.MaiorIgual;
+            rest.Desigualdade = Desigualdade.MaiorOuIgual;
           }
         }
 
       }
     }
-
 
     private void normalizarFuncaoObj()
     {
@@ -211,7 +210,6 @@ namespace SimplexSolver.CS.Dados
 
     }
 
-
     private void normalizarRestricoes()
     {
       Variavel auxVar = null;
@@ -221,10 +219,10 @@ namespace SimplexSolver.CS.Dados
 
         if (!rest.Normalizado)
         {
-          auxVar = createNewVariavelArtificial();
+          auxVar = CriarVariavelBasica();
 
           //Adicionar variaveis artificiais
-          if (rest.Relation == Relacionamento.MenorIgual)
+          if (rest.Desigualdade == Desigualdade.MenorOuIgual)
           {
             //Se o relacionamento for menor
 
@@ -255,9 +253,6 @@ namespace SimplexSolver.CS.Dados
       }
 
     }
-
-
-
   }
 
 }

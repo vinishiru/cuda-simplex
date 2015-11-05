@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0A26C961-6781-434A-904A-9ADC1FF753F4}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimplexSolver.CS</RootNamespace>
-    <AssemblyName>SimplexSolver.CS</AssemblyName>
+    <RootNamespace>SimplexSolver.Testes</RootNamespace>
+    <AssemblyName>SimplexSolver.Testes</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,15 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dados\Celula.cs" />
-    <Compile Include="Dados\Enums.cs" />
-    <Compile Include="Dados\FObjetivo.cs" />
-    <Compile Include="Dados\Quadro.cs" />
-    <Compile Include="Dados\Restricao.cs" />
-    <Compile Include="Dados\Variavel.cs" />
-    <Compile Include="Interfaces\ISimplexSolver.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimplexSolverCPU.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimplexSolver.CS\SimplexSolver.CS.csproj">
+      <Project>{0a26c961-6781-434a-904a-9adc1ff753f4}</Project>
+      <Name>SimplexSolver.CS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

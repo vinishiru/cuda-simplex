@@ -12,10 +12,24 @@ namespace SimplexSolver.CS.Dados
     Max
   }
 
-  public enum Relacionamento
+  public enum Desigualdade
   {
-    MenorIgual = 0,
-    MaiorIgual = 1
+    Maior,
+    Menor,
+    MenorOuIgual,
+    MaiorOuIgual,
+    Igual
+
   }
+
+  public enum StatusSimplex
+  {
+    SolucaoOtima,
+    SolucaoIlimitada,
+    SolucaoImpossivel,
+    PrimeiraEtapa,
+    SegundaEtapa,
+    AlgoritmoTroca,
+  };
 
 }
