@@ -49,7 +49,7 @@ namespace SimplexSolver.CS.Dados
         }
         else
         {
-          ColunaHeader[i] = funcaoObj.Variaveis["X" + i].Nome;
+          ColunaHeader[i] = funcaoObj.Variaveis.ToList()[i - 1].Key;
         }
       }
 
@@ -75,7 +75,7 @@ namespace SimplexSolver.CS.Dados
 
       for (int i = 1; i <= FuncaoObj.Variaveis.Count; i++)
       {
-        Matriz[0, i] = new Celula { ValorSuperior = FuncaoObj.Variaveis["X" + i].Coeficiente };
+        Matriz[0, i] = new Celula { ValorSuperior = FuncaoObj.Variaveis.ToList()[i - 1].Value.Coeficiente };
       }
 
       int linha = 1;
@@ -89,7 +89,7 @@ namespace SimplexSolver.CS.Dados
         {
           try
           {
-            Matriz[linha, col] = new Celula { ValorSuperior = rest.Variaveis["X" + col].Coeficiente };
+            Matriz[linha, col] = new Celula { ValorSuperior = rest.Variaveis.ToList()[col - 1].Value.Coeficiente };
           }
           catch (Exception ex)
           {

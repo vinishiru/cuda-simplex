@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SimplexSolver.CS.Classes;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,22 +10,35 @@ namespace SimplexSolver.Testes
 {
   class Program
   {
+
+    private const string DIRETORIO_NETLIB = "..\\..\\..\\..\\NetLib.Problemas";
+
     static void Main(string[] args)
     {
 
       Console.WriteLine("===================================");
       Console.WriteLine("=======Simplex Test Console========");
       Console.WriteLine("===================================");
-      testarSimplexSolverCS();
-
+      //testarSimplexSolverCS();
+      testarSimplexSolverCS_MPS();
       Console.WriteLine();
       Console.WriteLine("Fim da execucao");
       Console.ReadKey();
 
     }
 
+    private static void testarSimplexSolverCS_MPS()
+    {
+
+      SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
+
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "MPS_Petr_Exemplo.txt")));
+
+    }
+
     private static void testarSimplexSolverCS()
     {
+
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
       SimplexSolver.CS.Dados.FObjetivo funcao = new CS.Dados.FObjetivo();
 

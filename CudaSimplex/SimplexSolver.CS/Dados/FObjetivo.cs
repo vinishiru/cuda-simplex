@@ -8,6 +8,9 @@ namespace SimplexSolver.CS.Dados
 {
   public class FObjetivo
   {
+
+    public string NomeProblema { get; set; }
+    public string Nome { get; set; }
     //Propriedades que compõem uma função objetivo
     public Dictionary<string, Variavel> Variaveis { get; set; }
     //Conjunto de variaveis
@@ -63,7 +66,7 @@ namespace SimplexSolver.CS.Dados
 
     public Restricao AddRestricao(string restName)
     {
-      Restricao rest = new Restricao();
+      Restricao rest = new Restricao(restName);
       this.Restricoes.Add(restName, rest);
       return rest;
     }

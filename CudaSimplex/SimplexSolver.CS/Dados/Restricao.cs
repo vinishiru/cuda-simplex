@@ -12,6 +12,7 @@ namespace SimplexSolver.CS.Dados
   public class Restricao
   {
 
+    public string Nome { get; set; }
     //Propriedades que compõem uma função de restrição
     public Dictionary<string, Variavel> Variaveis { get; set; }
     //Conjunto de variáveis
@@ -27,6 +28,12 @@ namespace SimplexSolver.CS.Dados
     public Restricao()
     {
       this.Variaveis = new Dictionary<string, Variavel>();
+    }
+
+    public Restricao(string nomeRest)
+      : this()
+    {
+      Nome = nomeRest;
     }
 
     public void addVariavel(string varName, double varValue)
