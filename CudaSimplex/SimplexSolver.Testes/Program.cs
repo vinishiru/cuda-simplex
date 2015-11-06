@@ -19,8 +19,8 @@ namespace SimplexSolver.Testes
       Console.WriteLine("===================================");
       Console.WriteLine("=======Simplex Test Console========");
       Console.WriteLine("===================================");
-      //testarSimplexSolverCS();
-      testarSimplexSolverCS_MPS();
+      testarSimplexSolverCS();
+      //testarSimplexSolverCS_MPS();
       Console.WriteLine();
       Console.WriteLine("Fim da execucao");
       Console.ReadKey();
@@ -63,18 +63,12 @@ namespace SimplexSolver.Testes
       rest3.TermoLivre = 100;
       rest3.Desigualdade = CS.Dados.Desigualdade.MaiorOuIgual;
 
-      ShowFObjetivo(funcao);
+      funcao.MostrarFObjetivo();
 
       solver.Otimizar(funcao);
 
     }
 
-    private static void ShowFObjetivo(SimplexSolver.CS.Dados.FObjetivo funcao)
-    {
-      Console.WriteLine(funcao.ToString());
 
-      foreach (var rest in funcao.Restricoes)
-        Console.WriteLine(rest.Value.ToString());
-    }
   }
 }

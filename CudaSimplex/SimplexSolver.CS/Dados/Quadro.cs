@@ -85,17 +85,17 @@ namespace SimplexSolver.CS.Dados
         // Coluna 0 sera o termo livre
         Matriz[linha, 0] = new Celula { ValorSuperior = rest.TermoLivre };
 
-        for (int col = 1; col <= FuncaoObj.Variaveis.Count; col++)
+        for (int col = 1; col < this.ColunaHeader.Length; col++)
         {
-          try
+
+          var nomeVariavel = this.ColunaHeader[col];
+          Matriz[linha, col] = new Celula
           {
-            Matriz[linha, col] = new Celula { ValorSuperior = rest.Variaveis.ToList()[col - 1].Value.Coeficiente };
-          }
-          catch (Exception ex)
-          {
-            Matriz[linha, col] = new Celula { ValorSuperior = 0 };
-          }
+            ValorSuperior = rest.Variaveis.ContainsKey(nomeVariavel) ? rest.Variaveis[nomeVariavel].Coeficiente : 0.0
+          };
+
         }
+
         linha += 1;
       }
 

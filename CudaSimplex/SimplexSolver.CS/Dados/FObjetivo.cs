@@ -144,20 +144,6 @@ namespace SimplexSolver.CS.Dados
       return varAux;
     }
 
-    public void normalizar()
-    {
-      normalizarExtremo();
-
-      if (!this.Normalizado)
-      {
-        normalizarFuncaoObj();
-      }
-
-      normalizarRestricoes();
-
-    }
-
-
     private Restricao RecuperarRestricao(string restName)
     {
       Restricao restricaoAux = null;
@@ -173,6 +159,20 @@ namespace SimplexSolver.CS.Dados
         restricaoAux = Restricoes[restName];
       }
       return restricaoAux;
+    }
+
+
+    public void normalizar()
+    {
+      normalizarExtremo();
+
+      if (!this.Normalizado)
+      {
+        normalizarFuncaoObj();
+      }
+
+      normalizarRestricoes();
+
     }
 
     private void normalizarExtremo()
@@ -257,6 +257,15 @@ namespace SimplexSolver.CS.Dados
       }
 
     }
+
+    public void MostrarFObjetivo()
+    {
+      Console.WriteLine(this.ToString());
+
+      foreach (var rest in this.Restricoes)
+        Console.WriteLine(rest.Value.ToString());
+    }
+
   }
 
 }
