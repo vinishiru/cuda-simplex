@@ -10,9 +10,9 @@ namespace SimplexSolver.CS.Interfaces
   interface ISimplexSolver
   {
 
-    void Otimizar(ILPReader reader);
+    void Otimizar(ILPReader reader, Extremo extremo);
 
-    void Otimizar(FObjetivo funcao);
+    void Otimizar(FObjetivo funcao, Extremo extremo);
 
   }
 }

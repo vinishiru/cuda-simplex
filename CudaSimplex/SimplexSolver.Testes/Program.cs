@@ -19,8 +19,8 @@ namespace SimplexSolver.Testes
       Console.WriteLine("===================================");
       Console.WriteLine("=======Simplex Test Console========");
       Console.WriteLine("===================================");
-      testarSimplexSolverCS();
-      //testarSimplexSolverCS_MPS();
+      //testarSimplexSolverCS();
+      testarSimplexSolverCS_MPS();
       Console.WriteLine();
       Console.WriteLine("Fim da execucao");
       Console.ReadKey();
@@ -32,7 +32,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "MPS_Petr_Exemplo.txt")));
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "KEN-07.mps")), CS.Dados.Extremo.Maximizar);
 
     }
 
