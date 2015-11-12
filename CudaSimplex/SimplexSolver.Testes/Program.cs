@@ -32,7 +32,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "KEN-07.mps")), CS.Dados.Extremo.Maximizar);
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "DFL001.mps")), CS.Dados.Extremo.Maximizar);
 
     }
 

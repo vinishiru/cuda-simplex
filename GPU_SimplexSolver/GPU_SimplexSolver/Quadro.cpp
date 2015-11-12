@@ -76,17 +76,16 @@ void Quadro::buildMatriz(){
       //tentar recuperar a variavel na restricao atual
       auxItVariavel = itRestricao->second.Variaveis.find(itVariavel->first);
 
-      if (auxItVariavel != itRestricao->second.Variaveis.end()){
+      if (auxItVariavel != itRestricao->second.Variaveis.end())
         this->matrizSuperior[i] = auxItVariavel->second.Coeficiente;
-      }
       else
-      {
         this->matrizSuperior[i] = 0;
-      }
 
       i++;
-    }
 
+      //cout << i << endl;
+
+    }
 
   }//fim for
 }
