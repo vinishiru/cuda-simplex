@@ -4,18 +4,19 @@
 #include "FObjetivo.h"
 #include "Quadro.h"
 #include "SimplexGPU.h"
+#include "ILPReader.h"
 #include <vector>
 #include <exception>
 #include <iostream>
 
-enum StatusSimplex 
-{ 
-	SolucaoOtima,
-	SolucaoIlimitada,
-	SolucaoImpossivel,
-	PrimeiraEtapa,
-	SegundaEtapa,
-	AlgoritmoTroca,
+enum StatusSimplex
+{
+  SolucaoOtima,
+  SolucaoIlimitada,
+  SolucaoImpossivel,
+  PrimeiraEtapa,
+  SegundaEtapa,
+  AlgoritmoTroca,
 };
 
 /*
@@ -35,26 +36,26 @@ class SimplexSolver {
 
 public:
 
-	SimplexSolver(FObjetivo* func);
+  //Funcao que realizara todo o trabalho de otimizacao da funcao objetivo
+  void otimizar(ILPReader* reader);
 
-	//Funcao que realizara todo o trabalho de otimizacao da funcao objetivo
-	void otimizar();
+  void otimizar(FObjetivo* func);
 
 private:
 
-	SimplexGPU simplexGPU;
-	vector<StatusSimplex> historico;
-	StatusSimplex status;
-	Quadro *quadro;
+  SimplexGPU simplexGPU;
+  vector<StatusSimplex> historico;
+  StatusSimplex status;
+  Quadro *quadro;
 
-	int linhaPerm;
-	int colunaPerm;
+  int linhaPerm;
+  int colunaPerm;
 
-	StatusSimplex algoritmoPrimeiraEtapa();
-	StatusSimplex algoritmoSegundaEtapa();
-	StatusSimplex algoritmoTroca();
+  StatusSimplex algoritmoPrimeiraEtapa();
+  StatusSimplex algoritmoSegundaEtapa();
+  StatusSimplex algoritmoTroca();
 
-	void calcularLinhaPermissivel();
+  void calcularLinhaPermissivel();
 
 };
 

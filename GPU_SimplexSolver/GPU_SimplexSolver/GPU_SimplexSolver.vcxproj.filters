@@ -29,6 +29,9 @@
     <ClCompile Include="SimplexGPU.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Stopwatch.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FObjetivo.h">
@@ -64,6 +67,13 @@
     <ClInclude Include="SimplexGPU.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Stopwatch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ILPReader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu">
@@ -94,5 +104,8 @@
     <None Include="..\MPS_Petr_Exemplo.txt">
       <Filter>MPS File</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GPU_SimplexSolver.rc" />
   </ItemGroup>
 </Project>

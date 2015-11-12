@@ -10,6 +10,12 @@ namespace SimplexSolver.CS.Interfaces
   interface ISimplexSolver
   {
 
+    TimeSpan TempoLeituraFuncao();
+
+    TimeSpan TempoNormalizacao();
+
+    TimeSpan TempoOtimizacao();
+
     void Otimizar(ILPReader reader, Extremo extremo);
 
     void Otimizar(FObjetivo funcao, Extremo extremo);

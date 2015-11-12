@@ -32,7 +32,13 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "DFL001.mps")), CS.Dados.Extremo.Maximizar);
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "SHARE2B.mps")), CS.Dados.Extremo.Maximizar);
+
+      Console.WriteLine();
+      Console.WriteLine("Tempo leitura: {0}", solver.TempoLeituraFuncao().TotalSeconds);
+      Console.WriteLine("Tempo normalizacao: {0}", solver.TempoNormalizacao().TotalSeconds);
+      Console.WriteLine("Tempo otimizacao: {0}", solver.TempoOtimizacao().TotalSeconds);
+      Console.WriteLine();
 
     }
 

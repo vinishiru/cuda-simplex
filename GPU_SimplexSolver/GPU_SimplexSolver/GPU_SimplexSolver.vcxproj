@@ -95,6 +95,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Restricao.cpp" />
     <ClCompile Include="SimplexGPU.cpp" />
     <ClCompile Include="SimplexSolver.cpp" />
+    <ClCompile Include="Stopwatch.cpp" />
     <ClCompile Include="StringTokenizer.cpp" />
     <ClCompile Include="Variavel.cpp" />
   </ItemGroup>
@@ -103,19 +104,25 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="FObjetivo.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
+    <ClInclude Include="ILPReader.h" />
     <ClInclude Include="MPSReader.h" />
     <ClInclude Include="Quadro.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Restricao.h" />
     <ClInclude Include="SimplexGPU.h" />
     <ClInclude Include="SimplexGPUKernels.cuh" />
     <ClInclude Include="SimplexParallelFunctions.h" />
     <ClInclude Include="SimplexSolver.h" />
+    <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="StringTokenizer.h" />
     <ClInclude Include="Variavel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MPS_Petr_Exemplo.txt" />
     <None Include="..\MPS_Test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GPU_SimplexSolver.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
