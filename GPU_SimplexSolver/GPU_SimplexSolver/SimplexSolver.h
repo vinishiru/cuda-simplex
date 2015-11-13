@@ -5,6 +5,7 @@
 #include "Quadro.h"
 #include "SimplexGPU.h"
 #include "ILPReader.h"
+#include "Stopwatch.h"
 #include <vector>
 #include <exception>
 #include <iostream>
@@ -41,7 +42,15 @@ public:
 
   void otimizar(FObjetivo* func);
 
+  double tempoLeitura();
+  double tempoNormalizacao();
+  double tempoOtimizacao();
+
 private:
+
+  Stopwatch swLeitura;
+  Stopwatch swNormalizacao;
+  Stopwatch swOtimizacao;
 
   SimplexGPU simplexGPU;
   vector<StatusSimplex> historico;

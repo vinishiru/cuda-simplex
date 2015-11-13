@@ -17,13 +17,18 @@ void SimplexSolver::otimizar(FObjetivo* func){
   //definir status inicial do algoritmo
   this->status = PrimeiraEtapa;
 
+  this->swNormalizacao.Start();
   this->quadro->buildQuadro();
+  this->swNormalizacao.Stop();
+
   int qtdIteracoes = 0;
 
   cout << endl;
 
+
   try
   {
+    this->swOtimizacao.Start();
     while (this->status != SolucaoOtima &&
       this->status != SolucaoIlimitada &&
       this->status != SolucaoImpossivel)
@@ -51,8 +56,13 @@ void SimplexSolver::otimizar(FObjetivo* func){
       }
     }
 
+    //parar timer
+    this->swOtimizacao.Stop();
+
     //guardar ultimo status
     this->historico.push_back(this->status);
+
+
   }
   catch (exception e)
   {
@@ -184,4 +194,16 @@ StatusSimplex SimplexSolver::algoritmoTroca(){
   //this->quadro->toString();
 
   return PrimeiraEtapa;
+}
+
+double SimplexSolver::tempoLeitura(){
+  return 0.0;
+}
+
+double SimplexSolver::tempoNormalizacao(){
+  return this->swNormalizacao.Elapsed();
+}
+
+double SimplexSolver::tempoOtimizacao(){
+  return this->swOtimizacao.Elapsed();
 }

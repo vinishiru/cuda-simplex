@@ -5,12 +5,13 @@
 #include "FObjetivo.h"
 #include "FileReader.h"
 #include "SimplexSolver.h"
+#include "Stopwatch.h"
 
 void ExecuteCuda();
 
 int main(int argc, char **argv) {
 
-  ExecuteCuda();
+  /*ExecuteCuda();*/
 
   MPSReader* mpsReader;
 
@@ -97,9 +98,12 @@ int main(int argc, char **argv) {
     break;
   }
 
+  Stopwatch swLeitura;
+  swLeitura.Start();
   funcao = mpsReader->LerFuncaoObjetivo();
+  swLeitura.Stop();
 
-  cout << "Leitura da funcao objetivo concluida." << endl;
+  cout << "Leitura da funcao objetivo concluida. Tempo " << swLeitura.Elapsed() << "s" << endl;
   cout << endl;
 
   cout << "Quantidade de variaveis: " << funcao->Variaveis.size() << endl;
@@ -132,7 +136,11 @@ int main(int argc, char **argv) {
 
   cout << "Otimizando funcao objetivo...";
   solver.otimizar(funcao);
+
   cout << "Otimizado!" << endl;
+
+  cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
+  cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
 
   cout << endl << "Fim do programa. Digite qualquer tecla para sair..." << endl;
   getchar();
