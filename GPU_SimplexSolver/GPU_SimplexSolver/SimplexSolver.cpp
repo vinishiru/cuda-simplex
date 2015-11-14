@@ -26,7 +26,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
   cout << endl;
 
   //mostrar quadro atualizado
-  this->quadro->toString();
+  //this->quadro->toString();
 
   try
   {
