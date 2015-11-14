@@ -143,14 +143,14 @@
                 var.Coeficiente = var.Coeficiente * (-1)
             Next
 
-            'Inverter relacionamento das restricoes
-            For Each rest As Restricao In Restricoes.Values
-                If rest.Relation = Restricao.Relacionamento.MaiorIgual Then
-                    rest.Relation = Restricao.Relacionamento.MenorIgual
-                Else
-                    rest.Relation = Restricao.Relacionamento.MaiorIgual
-                End If
-            Next
+      ''Inverter relacionamento das restricoes
+      'For Each rest As Restricao In Restricoes.Values
+      '    If rest.Relation = Restricao.Relacionamento.MaiorIgual Then
+      '        rest.Relation = Restricao.Relacionamento.MenorIgual
+      '    Else
+      '        rest.Relation = Restricao.Relacionamento.MaiorIgual
+      '    End If
+      'Next
 
         End If
     End Sub

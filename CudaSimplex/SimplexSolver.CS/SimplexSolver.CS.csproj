@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\MPSLPReader.cs" />
+    <Compile Include="Classes\MPSLPReaderConfig.cs" />
     <Compile Include="Dados\Celula.cs" />
     <Compile Include="Dados\Enums.cs" />
     <Compile Include="Dados\FObjetivo.cs" />

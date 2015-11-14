@@ -25,6 +25,8 @@ void SimplexSolver::otimizar(FObjetivo* func){
 
   cout << endl;
 
+  //mostrar quadro atualizado
+  this->quadro->toString();
 
   try
   {
@@ -190,8 +192,6 @@ StatusSimplex SimplexSolver::algoritmoTroca(){
   this->quadro->rowHeader.at(this->linhaPerm) = this->quadro->colHeader.at(this->colunaPerm);
   this->quadro->colHeader.at(this->colunaPerm) = rowLabel;
 
-  //mostrar quadro atualizado
-  //this->quadro->toString();
 
   return PrimeiraEtapa;
 }

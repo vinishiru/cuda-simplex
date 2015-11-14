@@ -23,7 +23,9 @@ namespace SimplexSolver.CS.Classes
     private string[] _tokens;
     private char[] _separadores = new char[] { ' ' };
 
-    public MPSLPReader(string path)
+    private MPSLPReaderConfig _config;
+
+    public MPSLPReader(string path, MPSLPReaderConfig config = null)
     {
 
       if (string.IsNullOrEmpty(path))
@@ -35,6 +37,8 @@ namespace SimplexSolver.CS.Classes
       _path = path;
       _mpsFile = new StreamReader(path, Encoding.UTF8);
       _funcao = new FObjetivo();
+
+      _config = config ?? new MPSLPReaderConfig();
 
     }
 
@@ -134,9 +138,9 @@ namespace SimplexSolver.CS.Classes
         {
           _tokens = GerarTokens(_linha);
 
-          nomeVetorRHS = _tokens[0];
-          nomeFuncao = _tokens[1];
-          valorTermoLivre = _tokens[2];
+          nomeVetorRHS = _config.VetorRHSPossuiNome ? _tokens[0] : string.Empty;
+          nomeFuncao = _config.VetorRHSPossuiNome ? _tokens[1] : _tokens[0];
+          valorTermoLivre = _config.VetorRHSPossuiNome ? _tokens[2] : _tokens[1];
 
           if (nomeFuncao.Equals(_funcao.Nome))
             _funcao.TermoLivre = double.Parse(valorTermoLivre, _culture);
@@ -147,8 +151,8 @@ namespace SimplexSolver.CS.Classes
           //Nome Variavel e Valor Variavel, obedecendo as mesmas regras anteriores
           if (_tokens.Length > 3)
           {
-            nomeFuncao = _tokens[3];
-            valorTermoLivre = _tokens[4];
+            nomeFuncao = _config.VetorRHSPossuiNome ? _tokens[3] : _tokens[2];
+            valorTermoLivre = _config.VetorRHSPossuiNome ? _tokens[4] : _tokens[3];
 
             if (nomeFuncao.Equals(_funcao.Nome))
               _funcao.TermoLivre = double.Parse(valorTermoLivre, _culture);

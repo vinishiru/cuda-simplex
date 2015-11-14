@@ -136,7 +136,7 @@ namespace SimplexSolver.CS.Dados
     public Variavel CriarVariavelBasica()
     {
 
-      string varName = string.Format("VB_{0}", Variaveis.Count + VariaveisBasicas.Count + 1);
+      string varName = string.Format("VB_{0}", VariaveisBasicas.Count);
 
       Variavel varAux = new Variavel();
       varAux.Nome = varName;
@@ -187,18 +187,18 @@ namespace SimplexSolver.CS.Dados
           var.Coeficiente = var.Coeficiente * (-1);
         }
 
-        //Inverter relacionamento das restricoes
-        foreach (Restricao rest in Restricoes.Values)
-        {
-          if (rest.Desigualdade == Desigualdade.MaiorOuIgual)
-          {
-            rest.Desigualdade = Desigualdade.MenorOuIgual;
-          }
-          else
-          {
-            rest.Desigualdade = Desigualdade.MaiorOuIgual;
-          }
-        }
+        ////Inverter relacionamento das restricoes
+        //foreach (Restricao rest in Restricoes.Values)
+        //{
+        //  if (rest.Desigualdade == Desigualdade.MaiorOuIgual)
+        //  {
+        //    rest.Desigualdade = Desigualdade.MenorOuIgual;
+        //  }
+        //  else
+        //  {
+        //    rest.Desigualdade = Desigualdade.MaiorOuIgual;
+        //  }
+        //}
 
       }
     }
@@ -226,7 +226,7 @@ namespace SimplexSolver.CS.Dados
           auxVar = CriarVariavelBasica();
 
           //Adicionar variaveis artificiais
-          if (rest.Desigualdade == Desigualdade.MenorOuIgual)
+          if (rest.Desigualdade == Desigualdade.MenorOuIgual || rest.Desigualdade == Desigualdade.Menor || rest.Desigualdade == Desigualdade.Igual)
           {
             //Se o relacionamento for menor
 
