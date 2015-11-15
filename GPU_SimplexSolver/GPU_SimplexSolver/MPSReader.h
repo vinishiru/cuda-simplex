@@ -22,6 +22,9 @@ public:
 
   virtual FObjetivo* LerFuncaoObjetivo();
 
+  //variaveis de configuracao
+  bool VetorRHSPossuiNome;
+
 private:
 
   FileReader *fileReader;

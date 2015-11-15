@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
   cout << "7 - SHARE2B (Pequeno)" << endl;
   cout << "8 - ISRAEL (Medio)" << endl;
   cout << "9 - CAPRI (Medio)" << endl;
+  cout << "a - PILOT (Medio)" << endl;
   cout << endl;
 
   char x = getchar();
@@ -50,30 +51,32 @@ int main(int argc, char **argv) {
   cout << endl;
   cout << "Leitura da funcao objetivo iniciada..." << endl;
 
+  string diretorio = "C:\\Users\\Shirugaron\\Source\\Repos\\cuda-simplex\\NetLib.Problemas";
+
   switch (x) {
   case '1':
     //Problema grande
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\DFL001.mps");
+    mpsReader = new MPSReader(diretorio + "\\DFL001.mps");
     break;
 
   case '2':
     //Problema medio
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\KEN-07.mps");
+    mpsReader = new MPSReader(diretorio + "\\KEN-07.mps");
     break;
 
   case '3':
     //Problema pequeno
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\AFIRO.mps");
+    mpsReader = new MPSReader(diretorio + "\\AFIRO.mps");
     break;
 
   case '4':
     //Problema teste
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\MPS_Test.txt");
+    mpsReader = new MPSReader(diretorio + "\\MPS_Test.txt");
     break;
 
   case '5':
     //Problema teste
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\MPS_Petr_Exemplo.txt");
+    mpsReader = new MPSReader(diretorio + "\\MPS_Petr_Exemplo.txt");
     /*DESCRICAO ======================
     Neste exemplo, as condicoes de sinal das variaveis do Petr sao transformados em
     outras restricoes.
@@ -82,23 +85,28 @@ int main(int argc, char **argv) {
     break;
 
   case '6':
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\ADLITTLE.mps");
+    mpsReader = new MPSReader(diretorio + "\\ADLITTLE.mps");
     break;
 
   case '7':
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\SHARE2B.mps");
+    mpsReader = new MPSReader(diretorio + "\\SHARE2B.mps");
     break;
 
   case '8':
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\ISRAEL.mps");
+    mpsReader = new MPSReader(diretorio + "\\ISRAEL.mps");
     break;
 
   case '9':
-    mpsReader = new MPSReader("C:\\Users\\Shirugaron\\Dropbox\\Pessoal\\Mestrado\\Dissertação\\Repositório de Problemas\\CAPRI.mps");
+    mpsReader = new MPSReader(diretorio + "\\CAPRI.mps");
+    break;
+
+  case 'a':
+    mpsReader = new MPSReader(diretorio + "\\PILOT.mps");
     break;
   }
 
   Stopwatch swLeitura;
+  //mpsReader->VetorRHSPossuiNome = false;
   swLeitura.Start();
   funcao = mpsReader->LerFuncaoObjetivo();
   swLeitura.Stop();

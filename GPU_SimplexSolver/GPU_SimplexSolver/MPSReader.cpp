@@ -4,6 +4,7 @@
 MPSReader::MPSReader(std::string mpsPath){
   funcao = new FObjetivo();
   fileReader = new FileReader(mpsPath);
+  VetorRHSPossuiNome = true;
 }
 
 FObjetivo* MPSReader::LerFuncaoObjetivo(){
@@ -101,9 +102,15 @@ void MPSReader::readRHS(){
       //Ler no minimo 3 tokens
       //Nome variavel / Nome Funcao|Restricao / Valor variavel
 
-      nomeVetorRHS = lineTokens->nextToken();
-      nomeFuncao = lineTokens->nextToken();
-      valorTermoLivre = lineTokens->nextToken();
+      if (this->VetorRHSPossuiNome){
+        nomeVetorRHS = lineTokens->nextToken();
+        nomeFuncao = lineTokens->nextToken();
+        valorTermoLivre = lineTokens->nextToken();
+      }
+      else{
+        nomeFuncao = lineTokens->nextToken();
+        valorTermoLivre = lineTokens->nextToken();
+      }
 
       //Se nomeFuncao for o nome da funcao objetivo, atribuir variaveis nela
       if (nomeFuncao.compare(funcao->Nome) == 0){
