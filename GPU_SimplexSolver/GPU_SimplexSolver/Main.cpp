@@ -1,6 +1,7 @@
 #include <string>
 
 #include <stdio.h>
+#include <map>
 #include "MPSReader.h"
 #include "FObjetivo.h"
 #include "FileReader.h"
@@ -8,6 +9,23 @@
 #include "Stopwatch.h"
 
 void ExecuteCuda();
+
+std::ostream& operator<<(std::ostream& out, const StatusSimplex value){
+  static std::map<StatusSimplex, std::string> strings;
+  if (strings.size() == 0){
+#define INSERT_ELEMENT(p) strings[p] = #p
+    INSERT_ELEMENT(SolucaoOtima);
+    INSERT_ELEMENT(SolucaoOtima);
+    INSERT_ELEMENT(SolucaoIlimitada);
+    INSERT_ELEMENT(SolucaoImpossivel);
+    INSERT_ELEMENT(PrimeiraEtapa);
+    INSERT_ELEMENT(SegundaEtapa);
+    INSERT_ELEMENT(AlgoritmoTroca);
+#undef INSERT_ELEMENT
+  }
+
+  return out << strings[value];
+}
 
 int main(int argc, char **argv) {
 
@@ -106,7 +124,7 @@ int main(int argc, char **argv) {
   }
 
   Stopwatch swLeitura;
-  //mpsReader->VetorRHSPossuiNome = false;
+  mpsReader->VetorRHSPossuiNome = true;
   swLeitura.Start();
   funcao = mpsReader->LerFuncaoObjetivo();
   swLeitura.Stop();
@@ -149,6 +167,7 @@ int main(int argc, char **argv) {
 
   cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
   cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
+  cout << "Status final: " << solver.statusFinal() << endl;
 
   cout << endl << "Fim do programa. Digite qualquer tecla para sair..." << endl;
   getchar();

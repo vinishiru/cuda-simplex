@@ -29,20 +29,33 @@ namespace SimplexSolver.Testes
 
     private static void testarSimplexSolverCS_MPS()
     {
+      string[] problemas = {
+                             "MPS_Petr_Exemplo.txt",
+                             "MPS_Test.txt",
+                             "AFIRO.mps",
+                             "SHARE2B.mps",
+                             "ADLITTLE.mps",
+                             "CAPRI.mps",
+                             "ISRAEL.mps",
+                             "KEN-07.mps",
+                             "DFL001.mps"
+                           };
+
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "AFIRO.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "KEN-07.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true
       })
-      , CS.Dados.Extremo.Minimizar);
+      , CS.Dados.Extremo.Maximizar);
 
       Console.WriteLine();
       Console.WriteLine("Tempo leitura: {0}", solver.TempoLeituraFuncao().TotalSeconds);
       Console.WriteLine("Tempo normalizacao: {0}", solver.TempoNormalizacao().TotalSeconds);
       Console.WriteLine("Tempo otimizacao: {0}", solver.TempoOtimizacao().TotalSeconds);
+      Console.WriteLine("Status final: {0}", solver.RecuperarStatus());
       Console.WriteLine();
 
     }

@@ -207,3 +207,7 @@ double SimplexSolver::tempoNormalizacao(){
 double SimplexSolver::tempoOtimizacao(){
   return this->swOtimizacao.Elapsed();
 }
+
+StatusSimplex SimplexSolver::statusFinal(){
+  return this->status;
+}

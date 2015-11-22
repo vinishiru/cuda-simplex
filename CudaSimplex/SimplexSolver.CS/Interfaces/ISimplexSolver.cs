@@ -16,6 +16,8 @@ namespace SimplexSolver.CS.Interfaces
 
     TimeSpan TempoOtimizacao();
 
+    StatusSimplex RecuperarStatus();
+
     void Otimizar(ILPReader reader, Extremo extremo);
 
     void Otimizar(FObjetivo funcao, Extremo extremo);

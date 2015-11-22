@@ -12,12 +12,12 @@
 
 enum StatusSimplex
 {
-  SolucaoOtima,
-  SolucaoIlimitada,
-  SolucaoImpossivel,
-  PrimeiraEtapa,
-  SegundaEtapa,
-  AlgoritmoTroca,
+  SolucaoOtima = 0,
+  SolucaoIlimitada = 1,
+  SolucaoImpossivel = 2,
+  PrimeiraEtapa = 3,
+  SegundaEtapa = 4,
+  AlgoritmoTroca = 5,
 };
 
 /*
@@ -45,6 +45,8 @@ public:
   double tempoLeitura();
   double tempoNormalizacao();
   double tempoOtimizacao();
+
+  StatusSimplex statusFinal();
 
 private:
 
