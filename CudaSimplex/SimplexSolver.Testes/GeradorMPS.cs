@@ -38,7 +38,6 @@ namespace SimplexSolver.Testes
 
       //cria a lista de restricoes e ja adiciona a primeira funcao de custo
       _nomesRestricoes = new List<string>();
-      _nomesRestricoes.Add("COST");
 
       _builder = new StringBuilder();
     }
@@ -88,25 +87,29 @@ namespace SimplexSolver.Testes
       {
         nomeVar = PREFIXO_VARIAVEL + i;
 
+        //sempre escrever valor da funcao de custo
+        EscreverValorColumn(NOME_FUNCAO_CUSTO, nomeVar);
+
         foreach (string rest in _nomesRestricoes)
-          EscreverValorColumn(rest, nomeVar);
+          //probabilidade para gerar problema semi-esparso
+          if (_rnd.Next(0, 3) < 1)
+            EscreverValorColumn(rest, nomeVar);
+
+        //finaliza a linha caso esteja no meio da segunda coluna
+        if (_segundaColunaFlag)
+        {
+          _builder.AppendLine();
+          _segundaColunaFlag = false;
+        }
 
       }
-
-      //finaliza a linha caso esteja no meio da segunda coluna
-      if (_segundaColunaFlag)
-      {
-        _builder.AppendLine();
-        _segundaColunaFlag = false;
-      }
-
     }
 
     private void EscreverValorColumn(string nomeFuncao, string nomeVar)
     {
 
       //gerar valor
-      int valor = _rnd.Next(-9, 9);
+      int valor = _rnd.Next(-2, 9);
 
       if (!_segundaColunaFlag)
         _builder.Append(string.Concat(ESPACO_CURTO, nomeVar, ESPACO_CURTO, nomeFuncao, ESPACO_LONGO, valor));
@@ -121,7 +124,7 @@ namespace SimplexSolver.Testes
 
       _builder.AppendLine("RHS");
 
-      foreach (var nomeRest in _nomesRestricoes.Where(m => !m.Equals(NOME_FUNCAO_CUSTO)))
+      foreach (var nomeRest in _nomesRestricoes)
         EscreverValorRHS(nomeRest);
 
       if (_segundaColunaFlag)
@@ -135,7 +138,7 @@ namespace SimplexSolver.Testes
     {
 
       //gerar valor
-      int valor = _rnd.Next(-9, 9);
+      int valor = _rnd.Next(-1, 9);
 
       if (!_segundaColunaFlag)
         _builder.Append(string.Concat(ESPACO_CURTO, NOME_VETOR_RHS, ESPACO_CURTO, nomeFuncao, ESPACO_LONGO, valor));

@@ -15,17 +15,40 @@ namespace SimplexSolver.Testes
 
     static void Main(string[] args)
     {
+      string key = string.Empty;
+      do
+      {
+        Console.Clear();
+        Console.WriteLine("===================================");
+        Console.WriteLine("=======Simplex Test Console========");
+        Console.WriteLine("===================================");
 
-      Console.WriteLine("===================================");
-      Console.WriteLine("=======Simplex Test Console========");
-      Console.WriteLine("===================================");
-      //testarSimplexSolverCS();
-      testarSimplexSolverCS_MPS();
-      //gerarProblemaMPS();
-      Console.WriteLine();
-      Console.WriteLine("Fim da execucao");
-      Console.ReadKey();
+        Console.WriteLine();
 
+        Console.WriteLine("1 - Gerar Problema");
+        Console.WriteLine("2 - Resolver Problema");
+        Console.WriteLine();
+
+        Console.WriteLine("Opcao:");
+        key = Console.ReadLine();
+
+        switch (key)
+        {
+          case "1":
+            gerarProblemaMPS();
+            break;
+          case "2":
+            testarSimplexSolverCS_MPS();
+            break;
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Fim da execucao");
+
+        Console.WriteLine("Sair? s/n");
+        Console.ReadKey();
+
+      } while (key != "s");
     }
 
     private static void gerarProblemaMPS()
@@ -63,12 +86,12 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "2Var_3Rest.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "500Var_600Rest.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true
       })
-      , CS.Dados.Extremo.Maximizar);
+      , CS.Dados.Extremo.Minimizar);
 
       Console.WriteLine();
       Console.WriteLine("Tempo leitura: {0}", solver.TempoLeituraFuncao().TotalSeconds);

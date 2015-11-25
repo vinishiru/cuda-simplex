@@ -126,6 +126,14 @@ int main(int argc, char **argv) {
     mpsReader = new MPSReader(diretorio + "\\2Var_3Rest.mps");
     break;
 
+  case 'c':
+    mpsReader = new MPSReader(diretorio + "\\50Var_60Rest.mps");
+    break;
+
+  case 'd':
+    mpsReader = new MPSReader(diretorio + "\\500Var_600Rest.mps");
+    break;
+
   }
 
   Stopwatch swLeitura;

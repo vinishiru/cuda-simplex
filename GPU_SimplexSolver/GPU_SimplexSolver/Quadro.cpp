@@ -18,8 +18,8 @@ void Quadro::buildQuadro(){
   this->matrizInferior = new float[dim];
 
   //Variaveis auxiliares para indicar o total de linhas e colunas no quadro simplex
-  this->totalColunas = func->Variaveis.size() + 1;
-  this->totalLinhas = func->VariaveisBasicas.size() + 1;
+  this->totalColunas = func->Variaveis.size() + 1; // + 1 para contar com a coluna dos termos livres
+  this->totalLinhas = func->VariaveisBasicas.size() + 1; // + 1 para contar com a linha da funcao objetivo
 
   this->buildHeaders();
 
