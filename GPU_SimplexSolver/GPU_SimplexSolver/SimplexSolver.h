@@ -45,6 +45,7 @@ public:
   double tempoLeitura();
   double tempoNormalizacao();
   double tempoOtimizacao();
+  float valorCusto();
 
   StatusSimplex statusFinal();
 

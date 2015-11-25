@@ -208,6 +208,10 @@ double SimplexSolver::tempoOtimizacao(){
   return this->swOtimizacao.Elapsed();
 }
 
+float SimplexSolver::valorCusto(){
+  return this->quadro->matrizSuperior[0];
+}
+
 StatusSimplex SimplexSolver::statusFinal(){
   return this->status;
 }

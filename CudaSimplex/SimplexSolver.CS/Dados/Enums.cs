@@ -14,11 +14,11 @@ namespace SimplexSolver.CS.Dados
 
   public enum Desigualdade
   {
-    Maior,
-    Menor,
-    MenorOuIgual,
-    MaiorOuIgual,
-    Igual
+    Maior = 0,
+    Menor = 1,
+    MenorOuIgual = 2,
+    MaiorOuIgual = 3,
+    Igual = 4
 
   }
 

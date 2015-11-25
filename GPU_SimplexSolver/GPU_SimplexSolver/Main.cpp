@@ -121,6 +121,11 @@ int main(int argc, char **argv) {
   case 'a':
     mpsReader = new MPSReader(diretorio + "\\PILOT.mps");
     break;
+
+  case 'b':
+    mpsReader = new MPSReader(diretorio + "\\2Var_3Rest.mps");
+    break;
+
   }
 
   Stopwatch swLeitura;
@@ -167,6 +172,7 @@ int main(int argc, char **argv) {
 
   cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
   cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
+  cout << "Valor custo: " << solver.valorCusto() << endl;
   cout << "Status final: " << solver.statusFinal() << endl;
 
   cout << endl << "Fim do programa. Digite qualquer tecla para sair..." << endl;

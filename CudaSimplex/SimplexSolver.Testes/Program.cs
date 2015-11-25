@@ -21,9 +21,28 @@ namespace SimplexSolver.Testes
       Console.WriteLine("===================================");
       //testarSimplexSolverCS();
       testarSimplexSolverCS_MPS();
+      //gerarProblemaMPS();
       Console.WriteLine();
       Console.WriteLine("Fim da execucao");
       Console.ReadKey();
+
+    }
+
+    private static void gerarProblemaMPS()
+    {
+
+      Console.WriteLine("Quantidade de variaveis: ");
+      int qtdVariaveis = int.Parse(Console.ReadLine());
+
+      Console.WriteLine("Quantidade de restricoes: ");
+      int qtdRestricoes = int.Parse(Console.ReadLine());
+
+      string nomeProblema = string.Concat(qtdVariaveis, "Var_", qtdRestricoes, "Rest");
+
+      GeradorMPS gerador = new GeradorMPS(nomeProblema, qtdVariaveis, qtdRestricoes);
+      string buffer = gerador.GerarProblema();
+
+      File.WriteAllText(Path.Combine(DIRETORIO_NETLIB, nomeProblema + ".mps"), buffer);
 
     }
 
@@ -44,7 +63,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "KEN-07.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "2Var_3Rest.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true
@@ -55,6 +74,7 @@ namespace SimplexSolver.Testes
       Console.WriteLine("Tempo leitura: {0}", solver.TempoLeituraFuncao().TotalSeconds);
       Console.WriteLine("Tempo normalizacao: {0}", solver.TempoNormalizacao().TotalSeconds);
       Console.WriteLine("Tempo otimizacao: {0}", solver.TempoOtimizacao().TotalSeconds);
+      Console.WriteLine("Valor custo: {0}", solver.RecuperarValorCusto());
       Console.WriteLine("Status final: {0}", solver.RecuperarStatus());
       Console.WriteLine();
 

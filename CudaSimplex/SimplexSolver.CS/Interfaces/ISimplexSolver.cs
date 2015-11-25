@@ -18,6 +18,8 @@ namespace SimplexSolver.CS.Interfaces
 
     StatusSimplex RecuperarStatus();
 
+    double RecuperarValorCusto();
+
     void Otimizar(ILPReader reader, Extremo extremo);
 
     void Otimizar(FObjetivo funcao, Extremo extremo);
