@@ -36,7 +36,7 @@ namespace SimplexSolver.CS.Dados
       Nome = nomeRest;
     }
 
-    public void addVariavel(string varName, double varValue)
+    public void AddVariavel(string varName, double varValue)
     {
       //Verificar se ja existe essa variavel na restriçao
       Variavel varAux = null;

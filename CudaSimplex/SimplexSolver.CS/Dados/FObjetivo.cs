@@ -74,7 +74,7 @@ namespace SimplexSolver.CS.Dados
     public void AddVariavelRestricao(string restName, string varName, double varValue)
     {
       Restricao restricaoAux = this.RecuperarRestricao(restName);
-      restricaoAux.addVariavel(varName, varValue);
+      restricaoAux.AddVariavel(varName, varValue);
     }
 
     public void SetDesigualdadeRestricao(string restName, Desigualdade desigualdade)

@@ -1,4 +1,5 @@
 ﻿using SimplexSolver.CS.Classes;
+using SimplexSolver.CS.Dados;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +36,7 @@ namespace SimplexSolver.Testes
         switch (key)
         {
           case "1":
-            gerarProblemaMPS();
+            gerarProblemaLP();
             break;
           case "2":
             testarSimplexSolverCS_MPS();
@@ -51,7 +52,7 @@ namespace SimplexSolver.Testes
       } while (key != "s");
     }
 
-    private static void gerarProblemaMPS()
+    private static void gerarProblemaLP()
     {
 
       Console.WriteLine("Quantidade de variaveis: ");
@@ -60,12 +61,20 @@ namespace SimplexSolver.Testes
       Console.WriteLine("Quantidade de restricoes: ");
       int qtdRestricoes = int.Parse(Console.ReadLine());
 
-      string nomeProblema = string.Concat(qtdVariaveis, "Var_", qtdRestricoes, "Rest");
+      Console.WriteLine("Densidade: ");
+      int densidade = int.Parse(Console.ReadLine());
 
-      GeradorMPS gerador = new GeradorMPS(nomeProblema, qtdVariaveis, qtdRestricoes);
-      string buffer = gerador.GerarProblema();
 
-      File.WriteAllText(Path.Combine(DIRETORIO_NETLIB, nomeProblema + ".mps"), buffer);
+      GeradorLP gerador = new GeradorLP(qtdVariaveis, qtdRestricoes, densidade);
+      FObjetivo funcao = gerador.GerarProblemaLP();
+
+      //Console.WriteLine();
+      //funcao.MostrarFObjetivo();
+
+      TranscritorMPS transcritor = new TranscritorMPS(funcao);
+      string buffer = transcritor.TranscreverProblema();
+      
+      File.WriteAllText(Path.Combine(DIRETORIO_NETLIB, funcao.Nome + ".mps"), buffer);
 
     }
 
@@ -86,7 +95,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "500Var_600Rest.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "50Var_60Rest.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true
@@ -113,20 +122,20 @@ namespace SimplexSolver.Testes
       funcao.AddVariavel("X2", 12);
 
       var rest1 = funcao.AddRestricao("REST_1");
-      rest1.addVariavel("X1", 0.6);
-      rest1.addVariavel("X2", 1);
+      rest1.AddVariavel("X1", 0.6);
+      rest1.AddVariavel("X2", 1);
       rest1.TermoLivre = 600;
       rest1.Desigualdade = CS.Dados.Desigualdade.MenorOuIgual;
 
 
       var rest2 = funcao.AddRestricao("REST_2");
-      rest2.addVariavel("X1", 1);
-      rest2.addVariavel("X2", 1);
+      rest2.AddVariavel("X1", 1);
+      rest2.AddVariavel("X2", 1);
       rest2.TermoLivre = 300;
       rest2.Desigualdade = CS.Dados.Desigualdade.MaiorOuIgual;
 
       var rest3 = funcao.AddRestricao("REST_3");
-      rest3.addVariavel("X2", 1);
+      rest3.AddVariavel("X2", 1);
       rest3.TermoLivre = 100;
       rest3.Desigualdade = CS.Dados.Desigualdade.MaiorOuIgual;
 
