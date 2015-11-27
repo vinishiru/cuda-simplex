@@ -33,7 +33,7 @@ void Quadro::buildHeaders(){
 
   int i = 1;
   //Para todos os itens nas variaveis da funcao, adicionar os nomes das variaveis
-  for (unordered_map<string, Variavel>::iterator it = func->Variaveis.begin(); it != func->Variaveis.end(); it++){
+  for (map<string, Variavel>::iterator it = func->Variaveis.begin(); it != func->Variaveis.end(); it++){
     this->colHeader.insert(colHeader.begin() + i, it->second.Nome);
     i++;
   }
@@ -43,7 +43,7 @@ void Quadro::buildHeaders(){
   i = 1;
 
   //Percorrer todos as restricoes e adicionar as respectivas variaveis basicas
-  for (unordered_map<string, Restricao>::iterator it = func->Restricoes.begin(); it != func->Restricoes.end(); it++){
+  for (map<string, Restricao>::iterator it = func->Restricoes.begin(); it != func->Restricoes.end(); it++){
     this->rowHeader.insert(rowHeader.begin() + i, it->second.VariavelBasica->Nome);
     i++;
   }
@@ -56,15 +56,15 @@ void Quadro::buildMatriz(){
 
   //alocar variaveis da funcao
   int i = 1;
-  for (unordered_map<string, Variavel>::iterator it = func->Variaveis.begin(); it != func->Variaveis.end(); it++){
+  for (map<string, Variavel>::iterator it = func->Variaveis.begin(); it != func->Variaveis.end(); it++){
     this->matrizSuperior[i] = it->second.Coeficiente;
     i++;
   }
 
   //variavel de iteracao auxiliar
-  unordered_map<std::string, Variavel>::iterator auxItVariavel;
+  map<std::string, Variavel>::iterator auxItVariavel;
   //alocar variaveis das restricoess
-  for (unordered_map<string, Restricao>::iterator itRestricao = func->Restricoes.begin(); itRestricao != func->Restricoes.end(); itRestricao++){
+  for (map<string, Restricao>::iterator itRestricao = func->Restricoes.begin(); itRestricao != func->Restricoes.end(); itRestricao++){
 
     //alocar termo livre da restricao
     this->matrizSuperior[i] = itRestricao->second.TermoLivre;
@@ -72,7 +72,7 @@ void Quadro::buildMatriz(){
 
     //para cada variavel da funcao objetivo, devemos saber seus respectivos valores
     //na descritos na restricao atual
-    for (unordered_map<string, Variavel>::iterator itVariavel = func->Variaveis.begin(); itVariavel != func->Variaveis.end(); itVariavel++){
+    for (map<string, Variavel>::iterator itVariavel = func->Variaveis.begin(); itVariavel != func->Variaveis.end(); itVariavel++){
 
       //tentar recuperar a variavel na restricao atual
       auxItVariavel = itRestricao->second.Variaveis.find(itVariavel->first);

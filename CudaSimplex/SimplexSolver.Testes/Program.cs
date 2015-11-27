@@ -68,8 +68,8 @@ namespace SimplexSolver.Testes
       GeradorLP gerador = new GeradorLP(qtdVariaveis, qtdRestricoes, densidade);
       FObjetivo funcao = gerador.GerarProblemaLP();
 
-      //Console.WriteLine();
-      //funcao.MostrarFObjetivo();
+      Console.WriteLine();
+      funcao.MostrarFObjetivo();
 
       TranscritorMPS transcritor = new TranscritorMPS(funcao);
       string buffer = transcritor.TranscreverProblema();
@@ -95,7 +95,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "50Var_60Rest.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "2Var_3Rest.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true

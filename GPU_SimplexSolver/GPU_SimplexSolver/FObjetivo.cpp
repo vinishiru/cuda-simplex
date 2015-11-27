@@ -74,14 +74,14 @@ void FObjetivo::normalizarExtremo(){
   //Se a funcao for do tipo Maximizar
   if (this->DirecaoOtimizacao == Maximizar){
     //Inverter sinal das variaveis da funcao objetivo
-    for (unordered_map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
+    for (map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
       it->second.Coeficiente = it->second.Coeficiente * (-1);
     }
   }
 }
 
 void FObjetivo::normalizarFuncaoObj(){
-  for (unordered_map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
+  for (map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
     it->second.Coeficiente = it->second.Coeficiente * (-1);
   }
 }
@@ -90,7 +90,7 @@ void FObjetivo::normalizarRestricoes(){
 
   Variavel *varBasica;
 
-  for (unordered_map<string, Restricao>::iterator it = this->Restricoes.begin(); it != this->Restricoes.end(); it++){
+  for (map<string, Restricao>::iterator it = this->Restricoes.begin(); it != this->Restricoes.end(); it++){
 
     varBasica = this->criarVariavelBasica();
 
@@ -114,7 +114,7 @@ void FObjetivo::normalizarRestricoes(){
         it->second.TermoLivre = it->second.TermoLivre * (-1);
 
       //inverter valores dos coeficientes de todas as variaveis da restricao
-      for (unordered_map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
+      for (map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
         it2->second.Coeficiente = it2->second.Coeficiente * (-1);
       }
 

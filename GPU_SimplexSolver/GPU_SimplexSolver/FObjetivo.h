@@ -3,7 +3,7 @@
 
 #include "Variavel.h"
 #include "Restricao.h"
-#include <unordered_map>
+#include <map>
 #include <string>
 
 
@@ -18,9 +18,9 @@ public:
 	string NomeProblema;
 	string Nome;
 	float TermoLivre; //termo livre da funcao objetivo
-  unordered_map <string, Variavel> Variaveis; //variaveis da funcao objetivo (Nome da variavel, Variavel)
-  unordered_map <string, Restricao> Restricoes; // array de restricoes (Nome da restricao, Restricao)
-  unordered_map <string, Variavel*> VariaveisBasicas; //array de variaveis basicas de todas as restricoes lidas
+  map <string, Variavel> Variaveis; //variaveis da funcao objetivo (Nome da variavel, Variavel)
+  map <string, Restricao> Restricoes; // array de restricoes (Nome da restricao, Restricao)
+  map <string, Variavel*> VariaveisBasicas; //array de variaveis basicas de todas as restricoes lidas
 	TipoOtimizacao DirecaoOtimizacao; //direcao da otimizacao (minimizar ou maximizar)
 
 	//Funcoes para manipulacao

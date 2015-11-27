@@ -99,16 +99,16 @@ namespace SimplexSolver.Testes
     {
       switch (desigualdade)
       {
-        case Desigualdade.Maior:
+        case Desigualdade.Menor:
           return _rnd.Next(custoRest + 1, custoRest + _rnd.Next(2, 100));
 
-        case Desigualdade.MaiorOuIgual:
+        case Desigualdade.MenorOuIgual:
           return _rnd.Next(custoRest, custoRest + _rnd.Next(1, 100));
 
-        case Desigualdade.Menor:
+        case Desigualdade.Maior:
           return _rnd.Next(custoRest - _rnd.Next(2, 100), custoRest - 1);
 
-        case Desigualdade.MenorOuIgual:
+        case Desigualdade.MaiorOuIgual:
           return _rnd.Next(custoRest - _rnd.Next(1, 100), custoRest);
 
         default:
