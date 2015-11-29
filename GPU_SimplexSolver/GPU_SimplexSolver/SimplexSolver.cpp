@@ -68,7 +68,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
   }
   catch (exception e)
   {
-    cout << "Ocorreu um erro no algoritmo!" << e.what() << endl;
+    cout << endl << "Ocorreu um erro no algoritmo!" << e.what() << endl;
   }
 
 }

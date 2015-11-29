@@ -80,7 +80,7 @@ namespace SimplexSolver.CS.Dados
 
       int linha = 1;
 
-      foreach (Restricao rest in FuncaoObj.Restricoes.Values)
+      foreach (Restricao rest in FuncaoObj.Restricoes.OrderBy(m => m.Key).Select(m => m.Value))
       {
         // Coluna 0 sera o termo livre
         Matriz[linha, 0] = new Celula { ValorSuperior = rest.TermoLivre };

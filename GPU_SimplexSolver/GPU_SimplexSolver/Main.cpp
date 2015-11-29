@@ -142,8 +142,7 @@ int main(int argc, char **argv) {
   funcao = mpsReader->LerFuncaoObjetivo();
   swLeitura.Stop();
 
-  cout << "Leitura da funcao objetivo concluida. Tempo " << swLeitura.Elapsed() << "s" << endl;
-  cout << endl;
+  
 
   cout << "Quantidade de variaveis: " << funcao->Variaveis.size() << endl;
   cout << "Quantidade de restricoes: " << funcao->Restricoes.size() << endl;
@@ -178,6 +177,7 @@ int main(int argc, char **argv) {
 
   cout << "Otimizado!" << endl;
 
+  cout << "Tempo leitura: " << swLeitura.Elapsed() << "s" << endl;
   cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
   cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
   cout << "Valor custo: " << solver.valorCusto() << endl;
