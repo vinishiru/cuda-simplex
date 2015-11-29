@@ -1,13 +1,13 @@
 #include "Stopwatch.h"
 
 void Stopwatch::Start(){
-  this->begin = clock();
+  this->begin = std::chrono::high_resolution_clock::now();
 }
 
 void Stopwatch::Stop(){
-  this->end = clock();
+  this->end = std::chrono::high_resolution_clock::now();
 }
 
 double Stopwatch::Elapsed(){
-  return double(this->end - this->begin) / CLOCKS_PER_SEC;
+  return (double)(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()) / 1000000000;
 }

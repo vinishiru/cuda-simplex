@@ -1,9 +1,13 @@
 #include "SimplexGPUKernels.cuh"
 #include "math_functions.h"
 
-__global__ void calcularQuocientesKernel(float *dev_vetorQuocientes, float *dev_matrizSuperior, int colunaPerm, int totalColunas)
+__global__ void calcularQuocientesKernel(float *dev_vetorQuocientes, float *dev_matrizSuperior, int colunaPerm, int totalColunas, int totalLinhas)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
+
+  //evitar operação em endereço invalido
+  if (i > totalLinhas)
+    return;
 
   //controle que evita divisao por 0
   if (dev_matrizSuperior[i * totalColunas + colunaPerm] == 0)
@@ -13,7 +17,7 @@ __global__ void calcularQuocientesKernel(float *dev_vetorQuocientes, float *dev_
     dev_vetorQuocientes[i] = dev_matrizSuperior[i * totalColunas] / dev_matrizSuperior[i * totalColunas + colunaPerm];
 }
 
-void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *dev_vetorQuocientes, float *dev_matrizSuperior, int colunaPerm, int totalColunas)
+void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *dev_vetorQuocientes, float *dev_matrizSuperior, int colunaPerm, int totalColunas, int totalLinhas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
   int threadsPerBlock = 256;
@@ -24,7 +28,7 @@ void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *
   else
     blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
 
-  calcularQuocientesKernel << <blocksPerGrid, threadsPerBlock >> >(dev_vetorQuocientes, dev_matrizSuperior, colunaPerm, totalColunas);
+  calcularQuocientesKernel << <blocksPerGrid, threadsPerBlock >> >(dev_vetorQuocientes, dev_matrizSuperior, colunaPerm, totalColunas, totalLinhas);
   cudaDeviceSynchronize();
 }
 

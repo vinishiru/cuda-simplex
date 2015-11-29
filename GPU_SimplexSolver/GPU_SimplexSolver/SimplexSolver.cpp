@@ -21,7 +21,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
   this->quadro->buildQuadro();
   this->swNormalizacao.Stop();
 
-  int qtdIteracoes = 0;
+  int qtdIteracoes = 1;
 
   cout << endl;
 
@@ -31,6 +31,8 @@ void SimplexSolver::otimizar(FObjetivo* func){
   try
   {
     this->swOtimizacao.Start();
+    this->swSegPorIteracao.Start();
+
     while (this->status != SolucaoOtima &&
       this->status != SolucaoIlimitada &&
       this->status != SolucaoImpossivel)
@@ -49,11 +51,17 @@ void SimplexSolver::otimizar(FObjetivo* func){
         break;
 
       case AlgoritmoTroca:
-        cout << "Linha Perm\t" << this->linhaPerm;
-        cout << "\tColuna Perm\t" << this->colunaPerm;
+        this->swSegPorIteracao.Stop();
+        /*if (qtdIteracoes % 100 == 0){*/
+          cout << "Linha:\t" << this->linhaPerm;
+          cout << "\tColuna:\t" << this->colunaPerm;
+          cout << "\tIteracao\t" << qtdIteracoes;
+          cout << "\tTempo:\t" << this->swSegPorIteracao.Elapsed() << endl;
+        //}
+        this->swSegPorIteracao.Start();
         this->status = this->algoritmoTroca();
         qtdIteracoes++;
-        cout << "\tIteracao\t" << qtdIteracoes << endl;
+
         break;
       }
     }

@@ -131,7 +131,31 @@ int main(int argc, char **argv) {
     break;
 
   case 'd':
-    mpsReader = new MPSReader(diretorio + "\\500Var_600Rest.mps");
+    mpsReader = new MPSReader(diretorio + "\\500Var_500Rest.mps");
+    break;
+
+  case 'e':
+    mpsReader = new MPSReader(diretorio + "\\100Var_100Rest.mps");
+    break;
+
+  case 'f':
+    mpsReader = new MPSReader(diretorio + "\\1000Var_1000Rest.mps");
+    break;
+
+  case 'g':
+    mpsReader = new MPSReader(diretorio + "\\250Var_250Rest.mps");
+    break;
+
+  case 'h':
+    mpsReader = new MPSReader(diretorio + "\\350Var_350Rest.mps");
+    break;
+
+  case 'i':
+    mpsReader = new MPSReader(diretorio + "\\750Var_750Rest.mps");
+    break;
+
+  case 'j':
+    mpsReader = new MPSReader(diretorio + "\\2000Var_2000Rest.mps");
     break;
 
   }
@@ -142,7 +166,7 @@ int main(int argc, char **argv) {
   funcao = mpsReader->LerFuncaoObjetivo();
   swLeitura.Stop();
 
-  
+
 
   cout << "Quantidade de variaveis: " << funcao->Variaveis.size() << endl;
   cout << "Quantidade de restricoes: " << funcao->Restricoes.size() << endl;

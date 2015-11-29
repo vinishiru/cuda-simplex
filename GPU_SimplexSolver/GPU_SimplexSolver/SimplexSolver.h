@@ -54,6 +54,7 @@ private:
   Stopwatch swLeitura;
   Stopwatch swNormalizacao;
   Stopwatch swOtimizacao;
+  Stopwatch swSegPorIteracao;
 
   SimplexGPU simplexGPU;
   vector<StatusSimplex> historico;

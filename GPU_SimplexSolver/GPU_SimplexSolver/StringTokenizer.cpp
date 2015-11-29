@@ -16,6 +16,7 @@ string StringTokenizer::nextToken(){
 	char ch;
 	token.clear();
 	lastLineIndex = lineIndex;
+  
 
 	if (lineIndex < line.length()){
 		//Ler primeiro caracter

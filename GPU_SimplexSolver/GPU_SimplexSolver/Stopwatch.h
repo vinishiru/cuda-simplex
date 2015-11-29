@@ -1,7 +1,7 @@
 #ifndef __STOPWATCH_H_INCLUDED__
 #define __STOPWATCH_H_INCLUDED__
 
-#include <ctime>
+#include <chrono>
 
 /*
 Classe auxiliar para medir os tempos
@@ -16,8 +16,8 @@ public:
   double Elapsed();
 
 private:
-  clock_t begin;
-  clock_t end;
+  std::chrono::system_clock::time_point begin;
+  std::chrono::system_clock::time_point end;
 
 };
 

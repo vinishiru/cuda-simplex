@@ -25,6 +25,7 @@ namespace SimplexSolver.CS
     private Stopwatch _swLeituraFuncao;
     private Stopwatch _swNormalizacao;
     private Stopwatch _swOtimizacao;
+    private Stopwatch _swtempoIteracao;
 
     public SimplexSolverCPU()
     {
@@ -68,6 +69,7 @@ namespace SimplexSolver.CS
       _statusSimplex = StatusSimplex.PrimeiraEtapa;
 
       _swOtimizacao = Stopwatch.StartNew();
+      _swtempoIteracao = Stopwatch.StartNew();
 
       while (_statusSimplex != StatusSimplex.SolucaoIlimitada &&
         _statusSimplex != StatusSimplex.SolucaoOtima &&
@@ -87,7 +89,10 @@ namespace SimplexSolver.CS
             break;
 
           case StatusSimplex.AlgoritmoTroca:
-            Console.WriteLine(string.Format("Linha Permissivel: {0}\tColuna Permissivel: {1}\tIteracoes: {2}", _linhaPerm, _colunaPerm, _qtdIteracoes));
+            _swtempoIteracao.Stop();
+            //if (_qtdIteracoes % 100 == 0)
+              Console.WriteLine(string.Format("Linha: {0}\tColuna: {1}\tIteracoes: {2}\tTempo: {3}s", _linhaPerm, _colunaPerm, _qtdIteracoes, _swtempoIteracao.Elapsed.TotalSeconds));
+            _swtempoIteracao = Stopwatch.StartNew();
             _statusSimplex = this.AlgoritmoTroca();
             _qtdIteracoes++;
             break;

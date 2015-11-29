@@ -11,7 +11,7 @@ class SimplexGPUKernels{
 public:
 
 	static void executarCalcularQuocientesKernel(int numThreads, float *dev_vetorQuocientes,
-		float *dev_matrizSuperior, int colunaPerm, int totalColunas);
+		float *dev_matrizSuperior, int colunaPerm, int totalColunas, int totalLinhas);
 
 	/*static void executarCalculoLinhaPermitida(int numThreads,
 		float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int linhaPerm, int totalColunas);

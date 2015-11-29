@@ -69,7 +69,7 @@ namespace SimplexSolver.Testes
       FObjetivo funcao = gerador.GerarProblemaLP();
 
       Console.WriteLine();
-      funcao.MostrarFObjetivo();
+      //funcao.MostrarFObjetivo();
 
       TranscritorMPS transcritor = new TranscritorMPS(funcao);
       string buffer = transcritor.TranscreverProblema();
@@ -95,7 +95,7 @@ namespace SimplexSolver.Testes
 
       SimplexSolver.CS.SimplexSolverCPU solver = new CS.SimplexSolverCPU();
 
-      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "50Var_60Rest.mps"),
+      solver.Otimizar(new MPSLPReader(Path.Combine(DIRETORIO_NETLIB, "KEN-07.mps"),
         new MPSLPReaderConfig
       {
         VetorRHSPossuiNome = true
