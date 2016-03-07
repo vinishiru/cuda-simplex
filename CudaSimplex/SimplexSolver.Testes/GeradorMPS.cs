@@ -12,10 +12,10 @@ namespace SimplexSolver.Testes
 
     private string _nome;
 
-    private const string NOME_FUNCAO_CUSTO = "COST";
-    private const string PREFIXO_RESTRICAO = "REST_";
-    private const string PREFIXO_VARIAVEL = "X_";
-    private const string NOME_VETOR_RHS = "RHS1";
+    public const string NOME_FUNCAO_CUSTO = "COST";
+    public const string PREFIXO_RESTRICAO = "R";
+    public const string PREFIXO_VARIAVEL = "X";
+    public const string NOME_VETOR_RHS = "RHS1";
 
     private const string ESPACO_CURTO = "    ";
     private const string ESPACO_MEDIO = "        ";

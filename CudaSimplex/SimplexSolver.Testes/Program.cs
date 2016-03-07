@@ -28,6 +28,7 @@ namespace SimplexSolver.Testes
 
         Console.WriteLine("1 - Gerar Problema");
         Console.WriteLine("2 - Resolver Problema");
+        Console.WriteLine("3 - Formatar Problemas");
         Console.WriteLine();
 
         Console.WriteLine("Opcao:");
@@ -41,6 +42,9 @@ namespace SimplexSolver.Testes
           case "2":
             testarSimplexSolverCS_MPS();
             break;
+          case "3":
+            formatarProblemas();
+            break;
         }
 
         Console.WriteLine();
@@ -50,6 +54,22 @@ namespace SimplexSolver.Testes
         Console.ReadKey();
 
       } while (key != "s");
+    }
+
+
+    private static void formatarProblemas()
+    {
+      FormatadorMPS formatMPS = null;
+
+      foreach (var file in Directory.GetFiles(DIRETORIO_NETLIB, "*Var*Rest.mps"))
+      {
+        Console.WriteLine(string.Format("Formatando arquivo {0} ...", file));
+        formatMPS = new FormatadorMPS(file);
+        formatMPS.FormatarArquivo();
+        Console.WriteLine(string.Format("Arquivo formatado! {0}", file));
+        Console.WriteLine();
+      }
+
     }
 
     private static void gerarProblemaLP()
@@ -73,7 +93,7 @@ namespace SimplexSolver.Testes
 
       TranscritorMPS transcritor = new TranscritorMPS(funcao);
       string buffer = transcritor.TranscreverProblema();
-      
+
       File.WriteAllText(Path.Combine(DIRETORIO_NETLIB, funcao.Nome + ".mps"), buffer);
 
     }
