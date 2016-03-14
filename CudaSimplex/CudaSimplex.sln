@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EMPS", "..\EMPS\EMPS\EMPS.vcxproj", "{997BEFBE-E80C-4F7B-972B-EE52D9CFD348}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPU_SimplexSolver", "..\GPU_SimplexSolver\GPU_SimplexSolver\GPU_SimplexSolver.vcxproj", "{1C9CAE47-25BB-4605-BC1D-505424948642}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Cuda", "..\GPU_SimplexSolver\GPU_SimplexSolver\GPU_SimplexSolver.vcxproj", "{1C9CAE47-25BB-4605-BC1D-505424948642}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simplex_C++", "..\Simplex_C++\Simplex_C++\Simplex_C++.vcxproj", "{CB8DC2F4-F86E-4D33-822B-4F893CC09397}"
 EndProject
@@ -38,6 +38,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexSolver.CS", "SimplexSolver.CS\SimplexSolver.CS.csproj", "{0A26C961-6781-434A-904A-9ADC1FF753F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexSolver.Testes", "SimplexSolver.Testes\SimplexSolver.Testes.csproj", "{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Common", "SimplexSolver.Cpp.Common\SimplexSolver.Cpp.Common.vcxproj", "{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp", "SimplexSolver.Cpp\SimplexSolver.Cpp.vcxproj", "{69BCF664-4896-47A3-8D92-980576F3F81E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +135,34 @@ Global
 		{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}.Release|Win32.ActiveCfg = Release|Any CPU
 		{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|Win32.Build.0 = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|x86.ActiveCfg = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Debug|x86.Build.0 = Debug|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|Win32.ActiveCfg = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|Win32.Build.0 = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|x86.ActiveCfg = Release|Win32
+		{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}.Release|x86.Build.0 = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|Win32.Build.0 = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|x86.ActiveCfg = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Debug|x86.Build.0 = Debug|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Win32.ActiveCfg = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Win32.Build.0 = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|x86.ActiveCfg = Release|Win32
+		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

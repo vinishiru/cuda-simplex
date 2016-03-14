@@ -1,4 +1,4 @@
-#include "Stopwatch.h"
+#include "stdafx.h"
 
 void Stopwatch::Start(){
   this->begin = std::chrono::high_resolution_clock::now();

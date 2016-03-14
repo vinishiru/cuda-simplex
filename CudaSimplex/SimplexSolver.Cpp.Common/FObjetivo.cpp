@@ -1,4 +1,4 @@
-#include "FObjetivo.h"
+#include "stdafx.h"
 
 FObjetivo::FObjetivo(){
   this->TermoLivre = 0.0;

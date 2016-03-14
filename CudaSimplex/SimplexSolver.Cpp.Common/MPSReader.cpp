@@ -1,5 +1,4 @@
-#include "MPSReader.h"
-#include "StringTokenizer.h"
+#include "stdafx.h"
 
 MPSReader::MPSReader(std::string mpsPath){
   funcao = new FObjetivo();

@@ -1,4 +1,4 @@
-#include "StringTokenizer.h"
+#include "stdafx.h"
 
 StringTokenizer::StringTokenizer(string line){
 	this->line = line;

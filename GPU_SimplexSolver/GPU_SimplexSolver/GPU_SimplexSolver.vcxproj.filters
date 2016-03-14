@@ -2,59 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MPSReader.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="FileReader.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="StringTokenizer.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="FObjetivo.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Restricao.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Variavel.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Quadro.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="SimplexSolver.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="SimplexGPU.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Stopwatch.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FObjetivo.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Variavel.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Restricao.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MPSReader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="FileReader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="StringTokenizer.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Quadro.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="SimplexSolver.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -67,13 +22,7 @@
     <ClInclude Include="SimplexGPU.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Stopwatch.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ILPReader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu">

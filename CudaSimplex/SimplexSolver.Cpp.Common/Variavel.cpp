@@ -1,4 +1,4 @@
-#include "Variavel.h"
+#include "stdafx.h"
 
 Variavel::Variavel(){
 	//Sempre inicializar o coeficiente com 0.0

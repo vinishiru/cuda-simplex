@@ -1,4 +1,4 @@
-#include "FileReader.h"
+#include "stdafx.h"
 
 
 FileReader::FileReader(string filePath){
