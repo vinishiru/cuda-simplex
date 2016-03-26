@@ -15,5 +15,12 @@
 
 #include <atlbase.h>
 #include <atlstr.h>
+#include <vector>
 
 // TODO: reference additional headers your program requires here
+#include "FObjetivo.h"
+#include "Quadro.h"
+#include "MPSReader.h"
+#include "Stopwatch.h"
+#include "SimplexSolver.h"
+

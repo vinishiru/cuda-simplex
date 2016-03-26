@@ -23,7 +23,6 @@
 #include "ILPReader.h"
 #include "IReader.h"
 #include "MPSReader.h"
-#include "Quadro.h"
 #include "Restricao.h"
 #include "Stopwatch.h"
 #include "StringTokenizer.h"

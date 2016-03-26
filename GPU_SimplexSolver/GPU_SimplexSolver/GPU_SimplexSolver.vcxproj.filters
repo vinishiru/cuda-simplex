@@ -8,6 +8,9 @@
     <ClCompile Include="SimplexGPU.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Quadro.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimplexSolver.h">
@@ -23,6 +26,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Quadro.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="kernel.cu">

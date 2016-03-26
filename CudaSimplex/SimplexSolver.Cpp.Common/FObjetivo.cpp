@@ -63,9 +63,19 @@ Variavel* FObjetivo::criarVariavelBasica(){
   return varBasica;
 }
 
+Variavel* FObjetivo::criarVariavelArtificial(){
+
+  Variavel *varArtificial = new Variavel;
+
+  varArtificial->Nome = "VA_" + to_string(static_cast<long long>(this->VariaveisArtificiais.size()));
+  this->VariaveisArtificiais.insert(pair<string, Variavel*>(varArtificial->Nome, varArtificial));
+
+  return varArtificial;
+}
+
 void FObjetivo::normalizar(){
   this->normalizarExtremo();
-  this->normalizarFuncaoObj();
+  //this->normalizarFuncaoObj();
   this->normalizarRestricoes();
 }
 

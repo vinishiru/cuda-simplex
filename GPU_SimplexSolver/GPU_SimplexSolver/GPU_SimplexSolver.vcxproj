@@ -90,10 +90,12 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Quadro.cpp" />
     <ClCompile Include="SimplexGPU.cpp" />
     <ClCompile Include="SimplexSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Quadro.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimplexGPU.h" />
     <ClInclude Include="SimplexGPUKernels.cuh" />

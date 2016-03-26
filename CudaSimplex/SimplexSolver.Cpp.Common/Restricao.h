@@ -14,6 +14,7 @@ public:
   Restricao();
   map <std::string, Variavel> Variaveis;
   Variavel *VariavelBasica;
+  Variavel *VariavelArtificial; //simplex tradicional
   float TermoLivre;
   Desigualdade Desigualdade;
 };

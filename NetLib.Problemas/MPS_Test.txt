@@ -2,20 +2,14 @@ NAME          TESTPROB
 ROWS
  N  COST
  L  LIM1
- G  LIM2
- E  MYEQN
+ L  LIM2
 COLUMNS
-    XONE      COST                 1   LIM1                 1
-    XONE      LIM2                 1
-    YTWO      COST                 4   LIM1                 1
-    YTWO      MYEQN               -1
-    ZTHREE    COST                 9   LIM2                 1
-    ZTHREE    MYEQN                1
+    X1      COST                 7   LIM1                2
+    X1      LIM2                 1
+    X2      COST                 8   LIM1                 3
+    X2      LIM2                 1
+    X3    COST                 10   LIM1                 2
+    X3    LIM2                 2
 RHS
-    RHS1      LIM1                 5   LIM2                10
-    RHS1      MYEQN                7
-BOUNDS
- UP BND1      XONE                 4
- LO BND1      YTWO                -1
- UP BND1      YTWO                 1
+    RHS1      LIM1                 1000   LIM2                800
 ENDATA

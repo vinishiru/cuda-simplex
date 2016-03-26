@@ -17,7 +17,7 @@ public:
 
 	//Metodo que exibe o conteudo do quadro no console. APENAS DEBUG
 	void toString();
-
+  
 	int totalLinhas;
 	int totalColunas;
 

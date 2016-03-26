@@ -84,7 +84,6 @@
     <ClInclude Include="ILPReader.h" />
     <ClInclude Include="IReader.h" />
     <ClInclude Include="MPSReader.h" />
-    <ClInclude Include="Quadro.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Restricao.h" />
     <ClInclude Include="stdafx.h" />
@@ -105,7 +104,6 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FObjetivo.cpp" />
     <ClCompile Include="MPSReader.cpp" />
-    <ClCompile Include="Quadro.cpp" />
     <ClCompile Include="Restricao.cpp" />
     <ClCompile Include="SimplexSolver.Cpp.Common.cpp" />
     <ClCompile Include="stdafx.cpp">

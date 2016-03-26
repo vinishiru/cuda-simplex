@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Quadro.h"
 #include <iostream>
 
 void Quadro::buildQuadro(){
