@@ -2,14 +2,14 @@ NAME          TESTPROB
 ROWS
  N  COST
  L  LIM1
- L  LIM2
+ G  LIM2
 COLUMNS
-    X1      COST                 7   LIM1                2
+    X1      COST                 3   LIM1                2
     X1      LIM2                 1
-    X2      COST                 8   LIM1                 3
-    X2      LIM2                 1
-    X3    COST                 10   LIM1                 2
-    X3    LIM2                 2
+    X2      COST                 2   LIM1                 3
+    X2      LIM2                 4
+    X3    COST                   3   LIM1                 6
+    X3    LIM2                   5
 RHS
-    RHS1      LIM1                 1000   LIM2                800
+    RHS1      LIM1                 60   LIM2                40
 ENDATA

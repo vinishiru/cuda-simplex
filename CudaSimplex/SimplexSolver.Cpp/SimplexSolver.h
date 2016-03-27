@@ -16,12 +16,32 @@ public:
 
   void otimizar(FObjetivo* func);
 
+  double tempoLeitura();
+  double tempoNormalizacao();
+  double tempoOtimizacao();
+  float valorCusto();
+
 private:
+
+  Stopwatch swLeitura;
+  Stopwatch swNormalizacao;
+  Stopwatch swOtimizacao;
+  Stopwatch swSegPorIteracao;
 
   Quadro *quadro;
 
+  StatusSimplex status;
+
   int linhaPerm;
   int colunaPerm;
+
+  StatusSimplex algoritmoPrimeiraEtapa();
+  StatusSimplex algoritmoSegundaEtapa();
+  StatusSimplex algoritmoTroca();
+
+  void calcularLinhaPermissivel();
+
+  float recuperarTermoLivreLinha(int linha);
 
 };
 

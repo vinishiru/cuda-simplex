@@ -18,9 +18,9 @@
 #include <vector>
 
 // TODO: reference additional headers your program requires here
+#include "Stopwatch.h"
 #include "FObjetivo.h"
 #include "Quadro.h"
 #include "MPSReader.h"
-#include "Stopwatch.h"
 #include "SimplexSolver.h"
 

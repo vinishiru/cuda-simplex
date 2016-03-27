@@ -2,7 +2,7 @@
 
 void Quadro::buildQuadro(){
 
-  func->normalizar();
+  func->normalizar(Tradicional);
 
   /*
   Determinar a dimensao da matriz a ser utilizada no desenvolvimento
@@ -45,7 +45,7 @@ void Quadro::buildHeaders(){
   //inserir header final - P
   this->colHeader.insert(colHeader.begin() + i, "P");
   i++;
-  //inserir header final - Bj
+  //inserir header final - Bj (Termo Livre)
   this->colHeader.insert(colHeader.begin() + i, "Bj");
   i = 0;
 
@@ -93,7 +93,7 @@ void Quadro::buildMatriz(){
 
       //verificar se a variavel basica possui valor na restricao atual
       if (itRestricao->second.VariavelBasica->Nome.compare(itVariavel->second->Nome) == 0)
-        this->matriz[i] = 1;
+        this->matriz[i] = itRestricao->second.VariavelBasica->Coeficiente;
       else
         this->matriz[i] = 0;
 

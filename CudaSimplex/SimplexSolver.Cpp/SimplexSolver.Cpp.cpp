@@ -171,15 +171,15 @@ int _tmain(int argc, _TCHAR* argv[])
   //Normalizar funcao
   SimplexSolver solver;
 
-  //cout << "Otimizando funcao objetivo...";
+  cout << "Otimizando funcao objetivo...";
   solver.otimizar(funcao);
 
-  //cout << "Otimizado!" << endl;
+  cout << "Otimizado!" << endl;
 
-  //cout << "Tempo leitura: " << swLeitura.Elapsed() << "s" << endl;
-  //cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
-  //cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
-  //cout << "Valor custo: " << solver.valorCusto() << endl;
+  cout << "Tempo leitura: " << swLeitura.Elapsed() << "s" << endl;
+  cout << "Tempo normalizacao: " << solver.tempoNormalizacao() << "s" << endl;
+  cout << "Tempo otimizacao: " << solver.tempoOtimizacao() << "s" << endl;
+  cout << "Valor custo: " << solver.valorCusto() << endl;
   //cout << "Status final: " << solver.statusFinal() << endl;
 
   cout << endl << "Fim do programa. Digite qualquer tecla para sair..." << endl;

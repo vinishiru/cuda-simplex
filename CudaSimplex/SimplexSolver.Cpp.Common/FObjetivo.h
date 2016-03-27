@@ -9,6 +9,8 @@
 
 enum TipoOtimizacao { NaoDefinido = 0, Maximizar = 1, Minimizar = 2 };
 
+enum TipoNormalizacao { Tradicional = 0, Petr = 1};
+
 using namespace std;
 
 class FObjetivo{
@@ -38,9 +40,10 @@ public:
 
   //Funcao para normalizar de acordo com o padrao de funcao.
   //Ao final, a otimizacao sera do tipo minimizacao, restricoes com igualdades e variaveis artificiais estarao agregadas.
-  void normalizar();
+  void normalizar(TipoNormalizacao tipo);
 
 private:
+
   //Funcao para criar uma nova variavel artificial
   Variavel* criarVariavelBasica();
 
@@ -48,9 +51,9 @@ private:
   Variavel* criarVariavelArtificial();
 
   //Funcoes privadas auxiliares para normalizacao da funcao
-  void normalizarExtremo();
-  void normalizarFuncaoObj();
-  void normalizarRestricoes();
+  void normalizarExtremo(TipoNormalizacao tipo);
+  void normalizarFuncaoObj(TipoNormalizacao tipo);
+  void normalizarRestricoes(TipoNormalizacao tipo);
 
 };
 #endif

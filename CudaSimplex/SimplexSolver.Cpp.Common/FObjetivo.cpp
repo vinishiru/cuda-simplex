@@ -73,13 +73,13 @@ Variavel* FObjetivo::criarVariavelArtificial(){
   return varArtificial;
 }
 
-void FObjetivo::normalizar(){
-  this->normalizarExtremo();
-  //this->normalizarFuncaoObj();
-  this->normalizarRestricoes();
+void FObjetivo::normalizar(TipoNormalizacao tipo){
+  this->normalizarExtremo(tipo);
+  this->normalizarFuncaoObj(tipo);
+  this->normalizarRestricoes(tipo);
 }
 
-void FObjetivo::normalizarExtremo(){
+void FObjetivo::normalizarExtremo(TipoNormalizacao tipo){
 
   //Se a funcao for do tipo Maximizar
   if (this->DirecaoOtimizacao == Maximizar){
@@ -90,13 +90,14 @@ void FObjetivo::normalizarExtremo(){
   }
 }
 
-void FObjetivo::normalizarFuncaoObj(){
-  for (map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
-    it->second.Coeficiente = it->second.Coeficiente * (-1);
-  }
+void FObjetivo::normalizarFuncaoObj(TipoNormalizacao tipo){
+  if (tipo == Petr)
+    for (map<string, Variavel>::iterator it = this->Variaveis.begin(); it != this->Variaveis.end(); it++){
+      it->second.Coeficiente = it->second.Coeficiente * (-1);
+    }
 }
 
-void FObjetivo::normalizarRestricoes(){
+void FObjetivo::normalizarRestricoes(TipoNormalizacao tipo){
 
   Variavel *varBasica;
 
@@ -119,15 +120,18 @@ void FObjetivo::normalizarRestricoes(){
       varBasica->Coeficiente = -1;
       it->second.VariavelBasica = varBasica;
 
-      //inverter termo livre
-      if (it->second.TermoLivre != 0)
-        it->second.TermoLivre = it->second.TermoLivre * (-1);
+      ///somente na normalizacao do algoritmo do Petr que invertemos 
+      //o termo livre e os coeficientes das variaveis da retricao
+      if (tipo == Petr){
+        //inverter termo livre
+        if (it->second.TermoLivre != 0)
+          it->second.TermoLivre = it->second.TermoLivre * (-1);
 
-      //inverter valores dos coeficientes de todas as variaveis da restricao
-      for (map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
-        it2->second.Coeficiente = it2->second.Coeficiente * (-1);
+        //inverter valores dos coeficientes de todas as variaveis da restricao
+        for (map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
+          it2->second.Coeficiente = it2->second.Coeficiente * (-1);
+        }
       }
-
     }
     else{
       throw 20;

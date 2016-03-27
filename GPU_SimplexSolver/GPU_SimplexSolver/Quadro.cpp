@@ -4,7 +4,7 @@
 
 void Quadro::buildQuadro(){
 
-  func->normalizar();
+  func->normalizar(Petr);
 
   /*
   Nesse ponto e determinada a dimensao dos vetores/matrizes que irao conter
