@@ -194,3 +194,56 @@ void SimplexGPUKernels::executarTransporLinhaColunaPermitida(int numThreads, flo
   cudaDeviceSynchronize();
 
 }
+
+
+__global__ void calcularSubCelulasInferiores(float ep, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
+{
+  int i = blockDim.x * blockIdx.x + threadIdx.x;
+
+  //calcular o indice efetivo de calculo
+  int iLinha = ((int)(i / totalColunas));
+  int iColuna = i % totalColunas;
+
+  //se o indice pertencer a linha ou coluna permissiveis
+  if (iLinha == linhaPerm || iColuna == colunaPerm){
+    //se o indice for o elemento permissivel
+    if (iLinha == linhaPerm && iColuna == colunaPerm)
+      dev_matrizInferior[i] = 1 / ep;
+    else if (iLinha == linhaPerm && iColuna != colunaPerm)
+      //se for elemento da linha permissivel
+      dev_matrizInferior[i] = dev_matrizSuperior[i] * (1 / ep);
+    else if (iLinha != linhaPerm && iColuna == colunaPerm){
+      //se for elemento da coluna permissivel
+      dev_matrizInferior[i] = dev_matrizSuperior[i] * (-1 / ep);
+    }
+  }
+  else{
+    //os demais elementos que nao pertencem a linha ou coluna
+    //calcular indices correspondentes da subcelula superior da linha e coluna do elemento permissivel
+    int iLinhaSCS = linhaPerm * totalColunas + (i % totalColunas);
+    int iColunaSCS = ((int)(i / totalColunas)) * totalColunas + colunaPerm;
+    //calcular elemento da SCI da coluna permitida
+    float eleColPerm = dev_matrizSuperior[iColunaSCS] * (-1 / ep);
+    //calcular elemento da SCI atual
+    float eleSCI = dev_matrizSuperior[iLinhaSCS] * eleColPerm;
+    dev_matrizSuperior[i] = dev_matrizSuperior[i] + eleSCI;
+  }
+
+}
+
+void SimplexGPUKernels::executarCalculoSubCelulasInferiores(int numThreads, float ep, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
+{
+  //verificar maneira de adaptar esse controle de forma dinamica
+  int threadsPerBlock = 256;
+  int blocksPerGrid = 1;
+
+  if (threadsPerBlock > numThreads)
+    threadsPerBlock = numThreads;
+  else
+    blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
+
+
+  calcularSubCelulasInferiores << <blocksPerGrid, threadsPerBlock >> >(ep, dev_matrizSuperior, dev_matrizInferior, linhaPerm, colunaPerm, totalColunas);
+  cudaDeviceSynchronize();
+}
+

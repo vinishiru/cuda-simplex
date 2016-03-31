@@ -116,14 +116,17 @@ void SimplexGPU::atualizarQuadro(Quadro *quadro, int colunaPerm, int linhaPerm){
   //elemento permitido (EP)
   float ep = quadro->matrizSuperior[epIndex];
 
-  //multiplicar toda a linha pelo EP inverso encontrado e
-  //multiplicar toda coluna pelo -EP inverso
-  SimplexGPUKernels::executarCalculoLinhaColunaPermitida(maiorDim, this->dev_matrizSuperior, this->dev_matrizInferior, ep, linhaPerm, colunaPerm, quadro->totalColunas, quadro->totalLinhas);
+  ////multiplicar toda a linha pelo EP inverso encontrado e
+  ////multiplicar toda coluna pelo -EP inverso
+  //SimplexGPUKernels::executarCalculoLinhaColunaPermitida(maiorDim, this->dev_matrizSuperior, this->dev_matrizInferior, ep, linhaPerm, colunaPerm, quadro->totalColunas, quadro->totalLinhas);
 
-  //as outras posicoes da matrizInferior serao calculadas da seguinte forma:
-  //Elemento = SCI da coluna permitida * SCS da linha permitida
-  //correspondentes a do elemento
-  SimplexGPUKernels::executarCalculoQuadro(quadro->totalLinhas * quadro->totalColunas, this->dev_matrizSuperior, this->dev_matrizInferior, linhaPerm, colunaPerm, quadro->totalColunas);
+  ////as outras posicoes da matrizInferior serao calculadas da seguinte forma:
+  ////Elemento = SCI da coluna permitida * SCS da linha permitida
+  ////correspondentes a do elemento
+  //SimplexGPUKernels::executarCalculoQuadro(quadro->totalLinhas * quadro->totalColunas, this->dev_matrizSuperior, this->dev_matrizInferior, linhaPerm, colunaPerm, quadro->totalColunas);
+
+  //metodo otimizado para calcular as SCIs
+  SimplexGPUKernels::executarCalculoSubCelulasInferiores(quadro->totalLinhas * quadro->totalColunas, ep, this->dev_matrizSuperior, this->dev_matrizInferior, linhaPerm, colunaPerm, quadro->totalColunas);
 
   //transpor os elementos das SCI da linha e coluna permitidas para as suas SCS correspondentes
   SimplexGPUKernels::executarTransporLinhaColunaPermitida(maiorDim, this->dev_matrizSuperior, this->dev_matrizInferior, linhaPerm, colunaPerm, quadro->totalColunas, quadro->totalLinhas);

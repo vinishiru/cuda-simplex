@@ -17,7 +17,7 @@ void SimplexSolver::otimizar(FObjetivo *func){
   this->swNormalizacao.Stop();
 
   //exibir quadro montado;
-  this->quadro->toString();
+  //this->quadro->toString();
 
   //Desenvolvimento do Algoritmo Tradicional - Abordagem Surplus Variable
   //Inicialmente, deve-se verificar se o problema possui variáveis básicas

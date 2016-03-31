@@ -22,6 +22,9 @@ public:
 	float *calcularQuocientes(Quadro *quadro, int colunaPerm);
 	void atualizarQuadro(Quadro *quadro, int colunaPerm, int linhaPerm);
 
+  //Funcao otimizada para atualizacao do quadro (algoritmo de troca)
+  void atualizarQuadroOtimizado(Quadro *quadro, int colunaPerm, int linhaPerm);
+
 protected:
 
 	float *dev_matrizSuperior;
