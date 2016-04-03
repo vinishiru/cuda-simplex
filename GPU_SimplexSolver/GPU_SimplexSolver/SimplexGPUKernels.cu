@@ -32,83 +32,27 @@ void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *
   cudaDeviceSynchronize();
 }
 
-//Metodo antigo para calculo das SCI da linha e coluna permitidas
-//================================================================
-//__global__ void calcularLinhaPermitidaKernel(float *dev_matrizSuperior,float *dev_matrizInferior, float ep, int linhaPerm, int totalColunas)
-//{
-//    int i = blockDim.x * blockIdx.x + threadIdx.x;
-//
-//	//calcular o indice efetivo de calculo
-//	i = linhaPerm * totalColunas + i;
-//	dev_matrizInferior[i] = dev_matrizSuperior[i] * (1/ep);
-//
-// }
-//
-// void SimplexGPUKernels::executarCalculoLinhaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int linhaPerm, int totalColunas)
-// {
-//
-//	 //verificar maneira de adaptar esse controle de forma dinamica
-//	int threadsPerBlock = 256;
-//	int blocksPerGrid = 1;
-//
-//	if(threadsPerBlock > numThreads)
-//		threadsPerBlock = numThreads;
-//	else
-//		blocksPerGrid =(numThreads + threadsPerBlock - 1) / threadsPerBlock;
-//
-//
-//	calcularLinhaPermitidaKernel<<<blocksPerGrid, threadsPerBlock>>>(dev_matrizSuperior, dev_matrizInferior, ep, linhaPerm, totalColunas);
-//	cudaDeviceSynchronize();
-// }
-//
-//
-//
-// __global__ void calcularColunaPermitidaKernel(float *dev_matrizSuperior,float *dev_matrizInferior, float ep, int colunaPerm, int totalColunas)
-//{
-//    int i = blockDim.x * blockIdx.x + threadIdx.x;
-//
-//	//calcular o indice efetivo de calculo
-//	i = totalColunas * i + colunaPerm;
-//	dev_matrizInferior[i] = dev_matrizSuperior[i] * (-1/ep);
-//
-// }
-//
-// void SimplexGPUKernels::executarCalculoColunaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int colunaPerm, int totalColunas)
-// {
-//	//verificar maneira de adaptar esse controle de forma dinamica
-//	int threadsPerBlock = 256;
-//	int blocksPerGrid = 1;
-//
-//	if(threadsPerBlock > numThreads)
-//		threadsPerBlock = numThreads;
-//	else
-//		blocksPerGrid =(numThreads + threadsPerBlock - 1) / threadsPerBlock;
-//
-//
-//	calcularColunaPermitidaKernel<<<blocksPerGrid, threadsPerBlock>>>(dev_matrizSuperior, dev_matrizInferior, ep, colunaPerm, totalColunas);
-//	cudaDeviceSynchronize();
-// }
 
-
-__global__ void calcularLinhaColunaPermitidaKernel(float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
+__global__ void copiarLinhaColunaPermissiveis(float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
-  //calcular o indice efetivo de calculo
-  int iColunaPerm = totalColunas * i + colunaPerm;
-  int iLinhaPerm = linhaPerm * totalColunas + i;
+  //os demais elementos que nao pertencem a linha ou coluna
+  //calcular indices correspondentes da subcelula superior da linha
+  //e coluna do elemento permissivel
+  if (i < totalColunas){
+    int iLinhaPerm = linhaPerm * totalColunas + (i % totalColunas);
+    dev_linhaPerm[i] = dev_matrizSuperior[iLinhaPerm];
+  }
 
-  if (i < totalLinhas)
-    //calcula da coluna permissivel
-    dev_matrizInferior[iColunaPerm] = dev_matrizSuperior[iColunaPerm] * (-1 / ep);
-
-  if (i < totalColunas)
-    //calculo da linha permissivel
-    dev_matrizInferior[iLinhaPerm] = dev_matrizSuperior[iLinhaPerm] * (1 / ep);
+  if (i < totalLinhas){
+    int iColunaPerm = i * totalColunas + colunaPerm;
+    dev_colunaPerm[i] = dev_matrizSuperior[iColunaPerm];
+  }
 
 }
 
-void SimplexGPUKernels::executarCalculoLinhaColunaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
+void SimplexGPUKernels::executarCopiarLinhaColunaPermissiveis(int numThreads, float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
   int threadsPerBlock = 256;
@@ -120,83 +64,12 @@ void SimplexGPUKernels::executarCalculoLinhaColunaPermitida(int numThreads, floa
     blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
 
 
-  calcularLinhaColunaPermitidaKernel << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, dev_matrizInferior, ep, linhaPerm, colunaPerm, totalColunas, totalLinhas);
+  copiarLinhaColunaPermissiveis << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, dev_linhaPerm, dev_colunaPerm, linhaPerm, colunaPerm, totalColunas, totalLinhas);
   cudaDeviceSynchronize();
 }
 
 
-__global__ void calcularQuadro(float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
-{
-  int i = blockDim.x * blockIdx.x + threadIdx.x;
-
-  //ignorar valores que ja foram preenchidos na matriz inferior
-  if (!__isnanf(dev_matrizInferior[i]))
-    return;
-
-  //calcular o indice efetivo de calculo
-  int iLinhaSCS = linhaPerm * totalColunas + (i % totalColunas);
-  int iColunaSCI = ((int)(i / totalColunas)) * totalColunas + colunaPerm;
-
-  //calcular valor efetivo do elemento
-  dev_matrizInferior[i] = dev_matrizSuperior[iLinhaSCS] * dev_matrizInferior[iColunaSCI];
-
-  //realizar soma dos elementos entre SCI e SCS, gerando parte do novo quadro
-  dev_matrizSuperior[i] = dev_matrizInferior[i] + dev_matrizSuperior[i];
-
-}
-
-void SimplexGPUKernels::executarCalculoQuadro(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
-{
-  //verificar maneira de adaptar esse controle de forma dinamica
-  int threadsPerBlock = 256;
-  int blocksPerGrid = 1;
-
-  if (threadsPerBlock > numThreads)
-    threadsPerBlock = numThreads;
-  else
-    blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
-
-
-  calcularQuadro << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, dev_matrizInferior, linhaPerm, colunaPerm, totalColunas);
-  cudaDeviceSynchronize();
-}
-
-
-__global__ void transporLinhaColunaPermitidaKernel(float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
-{
-  int i = blockDim.x * blockIdx.x + threadIdx.x;
-
-  //calcular o indice efetivo de calculo
-  int iColunaPerm = totalColunas * i + colunaPerm;
-  int iLinhaPerm = linhaPerm * totalColunas + i;
-
-  if (i < totalLinhas)
-    dev_matrizSuperior[iColunaPerm] = dev_matrizInferior[iColunaPerm];
-
-  if (i < totalColunas)
-    dev_matrizSuperior[iLinhaPerm] = dev_matrizInferior[iLinhaPerm];
-}
-
-void SimplexGPUKernels::executarTransporLinhaColunaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
-{
-
-  //verificar maneira de adaptar esse controle de forma dinamica
-  int threadsPerBlock = 256;
-  int blocksPerGrid = 1;
-
-  if (threadsPerBlock > numThreads)
-    threadsPerBlock = numThreads;
-  else
-    blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
-
-
-  transporLinhaColunaPermitidaKernel << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, dev_matrizInferior, linhaPerm, colunaPerm, totalColunas, totalLinhas);
-  cudaDeviceSynchronize();
-
-}
-
-
-__global__ void calcularSubCelulasInferiores(float ep, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
+__global__ void calculoAlgoritmoTroca(float ep, float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -208,30 +81,34 @@ __global__ void calcularSubCelulasInferiores(float ep, float *dev_matrizSuperior
   if (iLinha == linhaPerm || iColuna == colunaPerm){
     //se o indice for o elemento permissivel
     if (iLinha == linhaPerm && iColuna == colunaPerm)
-      dev_matrizInferior[i] = 1 / ep;
+      dev_matrizSuperior[i] = 1 / ep;
     else if (iLinha == linhaPerm && iColuna != colunaPerm)
       //se for elemento da linha permissivel
-      dev_matrizInferior[i] = dev_matrizSuperior[i] * (1 / ep);
+      dev_matrizSuperior[i] = dev_matrizSuperior[i] * (1 / ep);
     else if (iLinha != linhaPerm && iColuna == colunaPerm){
       //se for elemento da coluna permissivel
-      dev_matrizInferior[i] = dev_matrizSuperior[i] * (-1 / ep);
+      dev_matrizSuperior[i] = dev_matrizSuperior[i] * (-1 / ep);
     }
   }
   else{
     //os demais elementos que nao pertencem a linha ou coluna
     //calcular indices correspondentes da subcelula superior da linha e coluna do elemento permissivel
-    int iLinhaSCS = linhaPerm * totalColunas + (i % totalColunas);
+    /*int iLinhaSCS = linhaPerm * totalColunas + (i % totalColunas);
     int iColunaSCS = ((int)(i / totalColunas)) * totalColunas + colunaPerm;
+    */
     //calcular elemento da SCI da coluna permitida
-    float eleColPerm = dev_matrizSuperior[iColunaSCS] * (-1 / ep);
+    float eleColPerm = dev_colunaPerm[iLinha] * (-1 / ep);
+
     //calcular elemento da SCI atual
-    float eleSCI = dev_matrizSuperior[iLinhaSCS] * eleColPerm;
+    float eleSCI = dev_linhaPerm[iColuna] * eleColPerm;
+
+    //somar elemento da SCI inferior virtual com o elemento da posicao atual
     dev_matrizSuperior[i] = dev_matrizSuperior[i] + eleSCI;
   }
 
 }
 
-void SimplexGPUKernels::executarCalculoSubCelulasInferiores(int numThreads, float ep, float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas)
+void SimplexGPUKernels::executarCalculoAlgoritmoTroca(int numThreads, float ep, float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
   int threadsPerBlock = 256;
@@ -243,7 +120,7 @@ void SimplexGPUKernels::executarCalculoSubCelulasInferiores(int numThreads, floa
     blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
 
 
-  calcularSubCelulasInferiores << <blocksPerGrid, threadsPerBlock >> >(ep, dev_matrizSuperior, dev_matrizInferior, linhaPerm, colunaPerm, totalColunas);
+  calculoAlgoritmoTroca << <blocksPerGrid, threadsPerBlock >> >(ep, dev_matrizSuperior, dev_linhaPerm, dev_colunaPerm, linhaPerm, colunaPerm, totalColunas);
   cudaDeviceSynchronize();
 }
 

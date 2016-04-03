@@ -98,6 +98,9 @@ void SimplexSolver::otimizar(FObjetivo* func){
 
         break;
       }
+
+      //this->quadro->toString();
+
     }
 
     //parar timer

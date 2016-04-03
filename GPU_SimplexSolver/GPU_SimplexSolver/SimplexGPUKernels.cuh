@@ -13,23 +13,12 @@ public:
   static void executarCalcularQuocientesKernel(int numThreads, float *dev_vetorQuocientes,
     float *dev_matrizSuperior, int colunaPerm, int totalColunas, int totalLinhas);
 
-  /*static void executarCalculoLinhaPermitida(int numThreads,
-    float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int linhaPerm, int totalColunas);
-    */
 
-  /*static void executarCalculoColunaPermitida(int numThreads,
-    float *dev_matrizSuperior, float *dev_matrizInferior, float ep, int colunaPerm, int totalColunas);
-    */
-  static void executarCalculoLinhaColunaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior,
-    float ep, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas);
+  static void executarCopiarLinhaColunaPermissiveis(int numThreads, float *dev_matrizSuperior, float *dev_linhaPerm,
+    float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas);
 
-  static void executarCalculoQuadro(int numThreads,
-    float *dev_matrizSuperior, float *dev_matrizInferior, int linhaPerm, int colunaPerm, int totalColunas);
 
-  static void executarTransporLinhaColunaPermitida(int numThreads, float *dev_matrizSuperior, float *dev_matrizInferior,
-    int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas);
-
-  static void executarCalculoSubCelulasInferiores(int numThreads, float ep, float *dev_matrizSuperior, float *dev_matrizInferior,
-    int linhaPerm, int colunaPerm, int totalColunas);
+  static void executarCalculoAlgoritmoTroca(int numThreads, float ep, float *dev_matrizSuperior,
+    float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas);
 };
 #endif
