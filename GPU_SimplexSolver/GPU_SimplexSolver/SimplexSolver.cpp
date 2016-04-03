@@ -117,6 +117,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
     cout << "Media Primeira etapa:\t" << tempoTotalPrimeiraEtapa / qtdIteracoes << endl;
     cout << "Media Segunda etapa:\t" << tempoTotalSegundaEtapa / qtdIteracoes << endl;
     cout << "Media Algoritmo Troca:\t" << tempoTotalTroca / qtdIteracoes << endl;
+    cout << "Media Seg/Iteracao:\t" << this->swOtimizacao.Elapsed() / qtdIteracoes << endl;
     cout << "==================================" << endl;
 
   }
