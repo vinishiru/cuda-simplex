@@ -17,7 +17,7 @@ void SimplexSolver::otimizar(FObjetivo *func){
   this->swNormalizacao.Stop();
 
   //exibir quadro montado;
-  //this->quadro->toString();
+  this->quadro->toString();
 
   //Desenvolvimento do Algoritmo Tradicional - Abordagem Surplus Variable
   //Inicialmente, deve-se verificar se o problema possui variáveis básicas
@@ -56,15 +56,21 @@ void SimplexSolver::otimizar(FObjetivo *func){
         break;
 
       case AlgoritmoTroca:
-        this->swSegPorIteracao.Stop();
-        /*if (qtdIteracoes % 100 == 0){*/
-        cout << "Linha:\t" << this->linhaPerm;
-        cout << "\tColuna:\t" << this->colunaPerm;
-        cout << "\tIteracao\t" << qtdIteracoes;
-        cout << "\tTempo:\t" << this->swSegPorIteracao.Elapsed() << endl;
-        //}
-        this->swSegPorIteracao.Start();
+
+        this->quadro->toString();
         this->status = this->algoritmoTroca();
+
+        this->swSegPorIteracao.Stop();
+
+        if (qtdIteracoes % 100 == 0){
+          cout << "Linha:\t" << this->linhaPerm;
+          cout << "\tColuna:\t" << this->colunaPerm;
+          cout << "\tIteracao\t" << qtdIteracoes;
+          cout << "\tTempo:\t" << this->swSegPorIteracao.Elapsed() << endl;
+        }
+
+
+        this->swSegPorIteracao.Start();
         qtdIteracoes++;
 
         break;
@@ -103,6 +109,7 @@ StatusSimplex SimplexSolver::algoritmoPrimeiraEtapa(){
   vector<string>::iterator itVarBase;
   int posVarBase = -1;
   float valorVarBase = 0;
+  float valorVarLinhaComTermoNeg = 0.0;
 
   //verificar se estamos na regiao permissivel
   //analisar se os valores das variaveis que estao na base
@@ -124,7 +131,7 @@ StatusSimplex SimplexSolver::algoritmoPrimeiraEtapa(){
     //Expressao: valor da variavel da base * valor do termo livre (ultima coluna)
     valorVarBase = this->quadro->matriz[linha * this->quadro->totalColunas + posVarBase] * recuperarTermoLivreLinha(linha);
 
-    if (valorVarBase <= 0)
+    if (valorVarBase < 0)
     {
       baseNegativaEncontrada = true;
       linhaBaseNegativo = linha;
@@ -140,9 +147,10 @@ StatusSimplex SimplexSolver::algoritmoPrimeiraEtapa(){
   //se ela foi encontrada, entao devemos encontrar a linha e a coluna
   //permissivel para efetuar o pivotamento
   //procurar, na linha contendo a base negativa encontrada
-  //um elemento positivo
-  for (int i = 0; i < this->quadro->totalColunas; i++){
-    if (this->quadro->matriz[linhaBaseNegativo * this->quadro->totalColunas + i] > 0){
+  //um elemento negativo
+  for (int i = 0; i < this->quadro->totalColunas - 1; i++){
+    valorVarLinhaComTermoNeg = this->quadro->matriz[linhaBaseNegativo * this->quadro->totalColunas + i];
+    if (valorVarLinhaComTermoNeg < 0){
       this->colunaPerm = i;
       elemPositivoEncontrado = true;
       break;
@@ -159,22 +167,39 @@ StatusSimplex SimplexSolver::algoritmoPrimeiraEtapa(){
   return AlgoritmoTroca;
 }
 
+bool SimplexSolver::colunaPertenceABase(int coluna){
+  ///verificar se o header apontado na coluna,
+  //ja se encontra na base (rowHeader)
+  string nomeVarColuna = this->quadro->colHeader[coluna];
+  vector<string>::iterator itVarBase = std::find(this->quadro->rowHeader.begin(), this->quadro->rowHeader.end(), nomeVarColuna);
+  bool pertenceABase = itVarBase != this->quadro->rowHeader.end();
+
+  return pertenceABase;
+}
+
 void SimplexSolver::calcularLinhaPermissivel(){
 
 
   float razaoAux = 0.0;
   float menorQuociente = FLT_MAX;
+  float eleColunaPerm = 0.0;
 
   //de posse da coluna permissivel
   //calcular a menor razao entre os elementos da coluna permissivel
   //e designa-la como a linha permissivel
   // o -1 significa para nao computar a ultima linha do quadro, pois essa eh a linha da FO
   for (int linha = 0; linha < this->quadro->totalLinhas - 1; linha++){
-    razaoAux = recuperarTermoLivreLinha(linha) / this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm];
+    eleColunaPerm = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm];
+    razaoAux = recuperarTermoLivreLinha(linha) / eleColunaPerm;
     if (razaoAux < menorQuociente && razaoAux > 0){
       menorQuociente = razaoAux;
       this->linhaPerm = linha;
     }
+  }
+
+  if (this->linhaPerm == -1){
+    cout << endl << "Ocorreu um erro para determinar a linha permissivel" << endl;
+    throw - 10;
   }
 
 }
@@ -231,6 +256,7 @@ StatusSimplex SimplexSolver::algoritmoTroca(){
     if (linha != this->linhaPerm){
       //calcular coeficiente que anula o elemento da coluna permissivel da linha atual
       fatorAnulador = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm] * (-1);
+
       for (int coluna = 0; coluna < this->quadro->totalColunas; coluna++){
         //o valor da coluna permissivel sera 0
         if (coluna == this->colunaPerm)

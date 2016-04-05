@@ -117,21 +117,25 @@ void FObjetivo::normalizarRestricoes(TipoNormalizacao tipo){
     //temos que adicionar uma variavel de excesso
     else if (it->second.Desigualdade == MaiorOuIgual || it->second.Desigualdade == Maior){
 
-      varBasica->Coeficiente = -1;
+      if (tipo == Petr)
+        varBasica->Coeficiente = -1;
+      else if (tipo == Tradicional)
+        varBasica->Coeficiente = 1;
+
       it->second.VariavelBasica = varBasica;
 
       ///somente na normalizacao do algoritmo do Petr que invertemos 
       //o termo livre e os coeficientes das variaveis da retricao
-      if (tipo == Petr){
-        //inverter termo livre
-        if (it->second.TermoLivre != 0)
-          it->second.TermoLivre = it->second.TermoLivre * (-1);
+      /*if (tipo == Petr){*/
+      //inverter termo livre
+      if (it->second.TermoLivre != 0)
+        it->second.TermoLivre = it->second.TermoLivre * (-1);
 
-        //inverter valores dos coeficientes de todas as variaveis da restricao
-        for (map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
-          it2->second.Coeficiente = it2->second.Coeficiente * (-1);
-        }
+      //inverter valores dos coeficientes de todas as variaveis da restricao
+      for (map<string, Variavel>::iterator it2 = it->second.Variaveis.begin(); it2 != it->second.Variaveis.end(); it2++){
+        it2->second.Coeficiente = it2->second.Coeficiente * (-1);
       }
+      //}
     }
     else{
       throw 20;

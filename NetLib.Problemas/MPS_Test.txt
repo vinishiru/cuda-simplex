@@ -4,12 +4,10 @@ ROWS
  L  LIM1
  G  LIM2
 COLUMNS
-    X1      COST                 3   LIM1                2
-    X1      LIM2                 1
-    X2      COST                 2   LIM1                 3
-    X2      LIM2                 4
-    X3    COST                   3   LIM1                 6
-    X3    LIM2                   5
+    X1      COST                 40   LIM1                1
+    X1      LIM2                 -2
+    X2      COST                 30   LIM1                 1
+    X2      LIM2                 3
 RHS
-    RHS1      LIM1                 60   LIM2                40
+    RHS1      LIM1                 5   LIM2                12
 ENDATA

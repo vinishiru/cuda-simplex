@@ -137,6 +137,9 @@ void Quadro::toString(){
 
   cout << "\t";
 
+  cout.unsetf(std::ios::floatfield);
+  cout.precision(4);
+
   //escrever os cabecalhos inicialmente
   for (std::vector<std::string>::iterator it = this->colHeader.begin(); it != this->colHeader.end(); it++){
     cout << *it << "\t";
@@ -168,4 +171,5 @@ void Quadro::toString(){
   }
 
   cout << endl;
+
 }

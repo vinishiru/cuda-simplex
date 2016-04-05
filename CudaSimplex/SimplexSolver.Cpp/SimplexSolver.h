@@ -43,5 +43,7 @@ private:
 
   float recuperarTermoLivreLinha(int linha);
 
+  bool colunaPertenceABase(int coluna);
+
 };
 
