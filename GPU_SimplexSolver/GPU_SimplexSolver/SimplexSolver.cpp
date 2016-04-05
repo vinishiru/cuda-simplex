@@ -78,7 +78,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
         tempoTotalSegundaEtapa += swSegundaEtapa.Elapsed();
         tempoTotalTroca += swAlgTroca.Elapsed();
 
-        if (qtdIteracoes % 1000 == 0){
+        if (qtdIteracoes % 100 == 0){
           //logar tempos
           cout << "==================================" << endl;
           //logar linha e coluna permitidas encontradas
@@ -98,8 +98,6 @@ void SimplexSolver::otimizar(FObjetivo* func){
 
         break;
       }
-
-      //this->quadro->toString();
 
     }
 

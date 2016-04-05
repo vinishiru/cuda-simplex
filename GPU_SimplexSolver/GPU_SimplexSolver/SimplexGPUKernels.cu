@@ -20,7 +20,7 @@ __global__ void calcularQuocientesKernel(float *dev_vetorQuocientes, float *dev_
 void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *dev_vetorQuocientes, float *dev_matrizSuperior, int colunaPerm, int totalColunas, int totalLinhas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
-  int threadsPerBlock = 256;
+  int threadsPerBlock = 1024;
   int blocksPerGrid = 1;
 
   if (threadsPerBlock > numThreads)
@@ -55,7 +55,7 @@ __global__ void copiarLinhaColunaPermissiveis(float *dev_matrizSuperior, float *
 void SimplexGPUKernels::executarCopiarLinhaColunaPermissiveis(int numThreads, float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
-  int threadsPerBlock = 256;
+  int threadsPerBlock = 1024;
   int blocksPerGrid = 1;
 
   if (threadsPerBlock > numThreads)
@@ -111,7 +111,7 @@ __global__ void calculoAlgoritmoTroca(float ep, float *dev_matrizSuperior, float
 void SimplexGPUKernels::executarCalculoAlgoritmoTroca(int numThreads, float ep, float *dev_matrizSuperior, float *dev_linhaPerm, float *dev_colunaPerm, int linhaPerm, int colunaPerm, int totalColunas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
-  int threadsPerBlock = 256;
+  int threadsPerBlock = 1024;
   int blocksPerGrid = 1;
 
   if (threadsPerBlock > numThreads)
