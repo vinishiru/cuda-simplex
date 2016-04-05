@@ -111,25 +111,12 @@ StatusSimplex SimplexSolver::algoritmoPrimeiraEtapa(){
   float valorVarBase = 0;
   float valorVarLinhaComTermoNeg = 0.0;
 
-  //verificar se estamos na regiao permissivel
-  //analisar se os valores das variaveis que estao na base
-  //lembrando que inicialmente as variaveis da base sao as variaveis basicas
-  //navegar ate a penultima linha, pois a ultima eh a da funcao objetivo
+  //verificar se alguns dos valores da coluna dos termos
+  //livres possui valor negativo, se possui, temos que pivotar previamente
+  //pois nem estamos na regiao permissivel
   for (int linha = 0; linha < this->quadro->totalLinhas - 1; linha++){
 
-    nomeVarBase = this->quadro->rowHeader[linha];
-    //verificar a coluna da variavel que esta na base
-    itVarBase = std::find(this->quadro->colHeader.begin(), this->quadro->colHeader.end(), nomeVarBase);
-
-    if (itVarBase != this->quadro->colHeader.end()){
-      //deve sempre cair aqui, pois todas as colunas contem todas as variaveis
-      posVarBase = std::distance(this->quadro->colHeader.begin(), itVarBase);
-    }
-
-    //de posse da linha e a coluna da variavel da base, devo calcular
-    //o valor do termo livre e verificar se este é >= que 0
-    //Expressao: valor da variavel da base * valor do termo livre (ultima coluna)
-    valorVarBase = this->quadro->matriz[linha * this->quadro->totalColunas + posVarBase] * recuperarTermoLivreLinha(linha);
+    valorVarBase = recuperarTermoLivreLinha(linha);
 
     if (valorVarBase < 0)
     {
@@ -190,6 +177,8 @@ void SimplexSolver::calcularLinhaPermissivel(){
   // o -1 significa para nao computar a ultima linha do quadro, pois essa eh a linha da FO
   for (int linha = 0; linha < this->quadro->totalLinhas - 1; linha++){
     eleColunaPerm = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm];
+    if (eleColunaPerm == 0)
+      continue;
     razaoAux = recuperarTermoLivreLinha(linha) / eleColunaPerm;
     if (razaoAux < menorQuociente && razaoAux > 0){
       menorQuociente = razaoAux;
