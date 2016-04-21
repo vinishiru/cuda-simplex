@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EMPS", "..\EMPS\EMPS\EMPS.vcxproj", "{997BEFBE-E80C-4F7B-972B-EE52D9CFD348}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Cuda", "..\GPU_SimplexSolver\GPU_SimplexSolver\GPU_SimplexSolver.vcxproj", "{1C9CAE47-25BB-4605-BC1D-505424948642}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Petr.Cuda", "..\GPU_SimplexSolver\GPU_SimplexSolver\GPU_SimplexSolver.vcxproj", "{1C9CAE47-25BB-4605-BC1D-505424948642}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimplexSolver", "..\SimplexSolver\SimplexSolver\SimplexSolver.vbproj", "{348DE1CF-6277-49F0-9DC4-D9E82AA333EC}"
 EndProject
@@ -33,13 +33,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetLib.Problemas", "NetLib.
 		..\NetLib.Problemas\share2b.txt = ..\NetLib.Problemas\share2b.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexSolver.CS", "SimplexSolver.CS\SimplexSolver.CS.csproj", "{0A26C961-6781-434A-904A-9ADC1FF753F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexSolver.CS.Petr", "SimplexSolver.CS\SimplexSolver.CS.Petr.csproj", "{0A26C961-6781-434A-904A-9ADC1FF753F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexSolver.Testes", "SimplexSolver.Testes\SimplexSolver.Testes.csproj", "{1389CDBA-E9E9-4E88-8044-D203BEF7ACCF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Common", "SimplexSolver.Cpp.Common\SimplexSolver.Cpp.Common.vcxproj", "{4A3FBE66-C0FA-4201-B2DA-5348ABA9B8C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp", "SimplexSolver.Cpp\SimplexSolver.Cpp.vcxproj", "{69BCF664-4896-47A3-8D92-980576F3F81E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplexSolver.Cpp.Cuda", "SimplexSolver.Cpp.Cuda\SimplexSolver.Cpp.Cuda.vcxproj", "{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,20 @@ Global
 		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|Win32.Build.0 = Release|Win32
 		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|x86.ActiveCfg = Release|Win32
 		{69BCF664-4896-47A3-8D92-980576F3F81E}.Release|x86.Build.0 = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|Win32.Build.0 = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|x86.ActiveCfg = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Debug|x86.Build.0 = Debug|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|Any CPU.ActiveCfg = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|Win32.ActiveCfg = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|Win32.Build.0 = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|x86.ActiveCfg = Release|Win32
+		{644F1E6D-7B5E-4468-BC3F-07D8D47F2DAC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

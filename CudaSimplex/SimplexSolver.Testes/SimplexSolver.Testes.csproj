@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimplexSolver.CS\SimplexSolver.CS.csproj">
+    <ProjectReference Include="..\SimplexSolver.CS\SimplexSolver.CS.Petr.csproj">
       <Project>{0a26c961-6781-434a-904a-9adc1ff753f4}</Project>
-      <Name>SimplexSolver.CS</Name>
+      <Name>SimplexSolver.CS.Petr</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
