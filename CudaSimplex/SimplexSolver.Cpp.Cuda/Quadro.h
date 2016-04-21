@@ -1,7 +1,4 @@
-#ifndef __QUADRO_H_INCLUDED__
-#define __QUADRO_H_INCLUDED__
-
-#include "FObjetivo.h"
+#pragma once
 
 class Quadro{
 
@@ -33,5 +30,3 @@ private:
   void buildMatriz();
 
 };
-
-#endif

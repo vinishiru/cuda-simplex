@@ -20,7 +20,6 @@ int _tmain(int argc, _TCHAR* argv[])
   //funcao.setDesigualdadeRestricao("Rest_1", MenorOuIgual);
   //funcao.setTermoLivreRestricao("Rest_1", 600);
 
-
   cout << "========================================" << endl;
   cout << "======Simplex Solver Tradicional GPU====" << endl;
   cout << "========================================" << endl;
