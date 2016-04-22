@@ -239,29 +239,6 @@ StatusSimplex SimplexSolver::algoritmoTroca(){
   //realizar a atualizacao das demais linhas em paralelo
   simplexGPU.atualizarQuadro(this->quadro, this->colunaPerm, this->linhaPerm);
 
-  ////usando a linha permissivel calculada,
-  ////satisfazer a equacao, para deixar todas os elementos da coluna permissivel
-  ////iguais a 0, ou seja, percorrer toda a matriz para isso
-  //for (int linha = 0; linha < this->quadro->totalLinhas; linha++)
-  //  //processar somente as demais linhas, sem ser a permissivel
-  //  if (linha != this->linhaPerm){
-  //    //calcular coeficiente que anula o elemento da coluna permissivel da linha atual
-  //    fatorAnulador = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm] * (-1);
-
-  //    for (int coluna = 0; coluna < this->quadro->totalColunas; coluna++){
-  //      //o valor da coluna permissivel sera 0
-  //      if (coluna == this->colunaPerm)
-  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = 0;
-  //      else
-  //        //os demais valores devem respeitar a equacao
-  //        //Valor = FatorAnulador * ValorLinhaPerm + LinhaAtual;
-  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = fatorAnulador *
-  //        this->quadro->matriz[this->linhaPerm * this->quadro->totalColunas + coluna] +
-  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna];
-  //    }
-  //  }
-
-
   //trocar headers
   this->quadro->rowHeader[this->linhaPerm] = this->quadro->colHeader[this->colunaPerm];
 
