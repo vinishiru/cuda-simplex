@@ -171,7 +171,7 @@ int _tmain(int argc, _TCHAR* argv[])
   //Normalizar funcao
   SimplexSolver solver;
 
-  cout << "Otimizando funcao objetivo...";
+  cout << "Otimizando funcao objetivo..." << endl;
   solver.otimizar(funcao);
 
   cout << "Otimizado!" << endl;

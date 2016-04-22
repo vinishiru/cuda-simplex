@@ -30,6 +30,7 @@ private:
 
   Quadro *quadro;
 
+  SimplexGPU simplexGPU;
   StatusSimplex status;
 
   int linhaPerm;

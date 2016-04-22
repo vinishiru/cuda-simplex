@@ -164,23 +164,22 @@ bool SimplexSolver::colunaPertenceABase(int coluna){
 
 void SimplexSolver::calcularLinhaPermissivel(){
 
-
-  float razaoAux = 0.0;
   float menorQuociente = FLT_MAX;
-  float eleColunaPerm = 0.0;
+  float* vetorQuocientes;
 
   //de posse da coluna permissivel
   //calcular a menor razao entre os elementos da coluna permissivel
   //e designa-la como a linha permissivel
   // o -1 significa para nao computar a ultima linha do quadro, pois essa eh a linha da FO
-  for (int linha = 0; linha < this->quadro->totalLinhas - 1; linha++){
-    eleColunaPerm = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm];
-    if (eleColunaPerm == 0)
-      continue;
-    razaoAux = recuperarTermoLivreLinha(linha) / eleColunaPerm;
-    if (razaoAux < menorQuociente && razaoAux > 0){
-      menorQuociente = razaoAux;
-      this->linhaPerm = linha;
+
+  //calcular quocientes em paralelo
+  vetorQuocientes = simplexGPU.calcularQuocientes(this->quadro, this->colunaPerm);
+
+  //identificar qual menor valor positivo no vetor de quocientes
+  for (int i = 0; i < this->quadro->totalLinhas; i++){
+    if (vetorQuocientes[i] > 0 && vetorQuocientes[i] < menorQuociente){
+      menorQuociente = vetorQuocientes[i];
+      this->linhaPerm = i;
     }
   }
 
@@ -188,6 +187,8 @@ void SimplexSolver::calcularLinhaPermissivel(){
     cout << endl << "Ocorreu um erro para determinar a linha permissivel" << endl;
     throw - 10;
   }
+
+  delete vetorQuocientes;
 
 }
 
@@ -235,27 +236,30 @@ StatusSimplex SimplexSolver::algoritmoTroca(){
       this->quadro->matriz[this->linhaPerm * this->quadro->totalColunas + coluna] * epInverso;
   }
 
-  //usando a linha permissivel calculada,
-  //satisfazer a equacao, para deixar todas os elementos da coluna permissivel
-  //iguais a 0, ou seja, percorrer toda a matriz para isso
-  for (int linha = 0; linha < this->quadro->totalLinhas; linha++)
-    //processar somente as demais linhas, sem ser a permissivel
-    if (linha != this->linhaPerm){
-      //calcular coeficiente que anula o elemento da coluna permissivel da linha atual
-      fatorAnulador = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm] * (-1);
+  //realizar a atualizacao das demais linhas em paralelo
+  simplexGPU.atualizarQuadro(this->quadro, this->colunaPerm, this->linhaPerm);
 
-      for (int coluna = 0; coluna < this->quadro->totalColunas; coluna++){
-        //o valor da coluna permissivel sera 0
-        if (coluna == this->colunaPerm)
-          this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = 0;
-        else
-          //os demais valores devem respeitar a equacao
-          //Valor = FatorAnulador * ValorLinhaPerm + LinhaAtual;
-          this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = fatorAnulador *
-          this->quadro->matriz[this->linhaPerm * this->quadro->totalColunas + coluna] +
-          this->quadro->matriz[linha * this->quadro->totalColunas + coluna];
-      }
-    }
+  ////usando a linha permissivel calculada,
+  ////satisfazer a equacao, para deixar todas os elementos da coluna permissivel
+  ////iguais a 0, ou seja, percorrer toda a matriz para isso
+  //for (int linha = 0; linha < this->quadro->totalLinhas; linha++)
+  //  //processar somente as demais linhas, sem ser a permissivel
+  //  if (linha != this->linhaPerm){
+  //    //calcular coeficiente que anula o elemento da coluna permissivel da linha atual
+  //    fatorAnulador = this->quadro->matriz[linha * this->quadro->totalColunas + this->colunaPerm] * (-1);
+
+  //    for (int coluna = 0; coluna < this->quadro->totalColunas; coluna++){
+  //      //o valor da coluna permissivel sera 0
+  //      if (coluna == this->colunaPerm)
+  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = 0;
+  //      else
+  //        //os demais valores devem respeitar a equacao
+  //        //Valor = FatorAnulador * ValorLinhaPerm + LinhaAtual;
+  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna] = fatorAnulador *
+  //        this->quadro->matriz[this->linhaPerm * this->quadro->totalColunas + coluna] +
+  //        this->quadro->matriz[linha * this->quadro->totalColunas + coluna];
+  //    }
+  //  }
 
 
   //trocar headers

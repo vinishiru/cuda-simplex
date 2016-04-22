@@ -60,6 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ShowProgress>NotSet</ShowProgress>
+      <AdditionalDependencies>cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -87,12 +88,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Quadro.h" />
+    <ClInclude Include="SimplexGPU.h" />
+    <ClInclude Include="SimplexGPUKernels.cuh" />
     <ClInclude Include="SimplexSolver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Quadro.cpp" />
+    <ClCompile Include="SimplexGPU.cpp" />
     <ClCompile Include="SimplexSolver.cpp" />
     <ClCompile Include="SimplexSolver.Cpp.Cuda.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -104,6 +108,9 @@
     <ProjectReference Include="..\SimplexSolver.Cpp.Common\SimplexSolver.Cpp.Common.vcxproj">
       <Project>{4a3fbe66-c0fa-4201-b2da-5348aba9b8c5}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="SimplexGPUKernels.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
