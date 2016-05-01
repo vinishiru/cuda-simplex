@@ -29,8 +29,15 @@ void SimplexSolver::otimizar(FObjetivo *func){
   //Transformar os demais elementos da coluna permissiva em 0, operando por toda linha
   //correspondente.
 
+  double tempoTotalPrimeiraEtapa = 0, tempoTotalSegundaEtapa = 0, tempoTotalTroca = 0;
+
+  int auxLinhaPerm = 0, auxColunaPerm = 0;
 
   int qtdIteracoes = 1;
+
+  Stopwatch swPrimeiraEtapa;
+  Stopwatch swSegundaEtapa;
+  Stopwatch swAlgTroca;
 
   try
   {
@@ -47,27 +54,48 @@ void SimplexSolver::otimizar(FObjetivo *func){
       switch (this->status)
       {
       case PrimeiraEtapa:
+        swPrimeiraEtapa.Start();
         this->status = this->algoritmoPrimeiraEtapa();
+        swPrimeiraEtapa.Stop();
         break;
 
       case SegundaEtapa:
+        swSegundaEtapa.Start();
         this->status = this->algoritmoSegundaEtapa();
+        swSegundaEtapa.Stop();
         break;
 
       case AlgoritmoTroca:
 
         //this->quadro->toString();
-        this->status = this->algoritmoTroca();
+        //gravar linha e coluna permitidas encontradas
+        auxLinhaPerm = this->linhaPerm;
+        auxColunaPerm = this->colunaPerm;
 
+        swAlgTroca.Start();
+        this->status = this->algoritmoTroca();
+        swAlgTroca.Stop();
         this->swSegPorIteracao.Stop();
 
-        if (qtdIteracoes % 100 == 0){
+        tempoTotalPrimeiraEtapa += swPrimeiraEtapa.Elapsed();
+        tempoTotalSegundaEtapa += swSegundaEtapa.Elapsed();
+        tempoTotalTroca += swAlgTroca.Elapsed();
+
+        if (qtdIteracoes % 10 == 0){
+          //logar tempos
+          cout << "==================================" << endl;
+          //logar linha e coluna permitidas encontradas
           cout << "Linha:\t" << this->linhaPerm;
           cout << "\tColuna:\t" << this->colunaPerm;
-          cout << "\tIteracao\t" << qtdIteracoes;
-          cout << "\tTempo:\t" << this->swSegPorIteracao.Elapsed() << endl;
+          cout << "\tIteracao\t" << qtdIteracoes << endl;
+          cout << "Primeira etapa:\t\t" << swPrimeiraEtapa.Elapsed() << endl;
+          cout << "Segunda etapa:\t\t" << swSegundaEtapa.Elapsed() << endl;
+          cout << "Algoritmo Troca:\t" << swAlgTroca.Elapsed() << endl;
+          cout << "Total:\t\t\t" << this->swSegPorIteracao.Elapsed() << endl;
+          cout << "==================================" << endl;
         }
 
+        //reiniciar tempo de iteracao
         this->swSegPorIteracao.Start();
         qtdIteracoes++;
 
@@ -80,6 +108,17 @@ void SimplexSolver::otimizar(FObjetivo *func){
 
     //guardar ultimo status
     //this->historico.push_back(this->status);
+
+    //logada final
+    //logar tempos
+    cout << "==================================" << endl;
+    //logar linha e coluna permitidas encontradas
+    cout << "Iteracao\t" << qtdIteracoes << endl;
+    cout << "Media Primeira etapa:\t" << tempoTotalPrimeiraEtapa / qtdIteracoes << endl;
+    cout << "Media Segunda etapa:\t" << tempoTotalSegundaEtapa / qtdIteracoes << endl;
+    cout << "Media Algoritmo Troca:\t" << tempoTotalTroca / qtdIteracoes << endl;
+    cout << "Media Seg/Iteracao:\t" << this->swOtimizacao.Elapsed() / qtdIteracoes << endl;
+    cout << "==================================" << endl;
 
   }
   catch (exception e)
