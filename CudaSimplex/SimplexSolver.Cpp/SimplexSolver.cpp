@@ -41,6 +41,8 @@ void SimplexSolver::otimizar(FObjetivo *func){
 
   int auxLinhaPerm = 0, auxColunaPerm = 0;
 
+  cout << endl;
+
   try
   {
     this->swOtimizacao.Start();
@@ -83,7 +85,7 @@ void SimplexSolver::otimizar(FObjetivo *func){
         tempoTotalSegundaEtapa += swSegundaEtapa.Elapsed();
         tempoTotalTroca += swAlgTroca.Elapsed();
 
-        if (qtdIteracoes % 10 == 0){
+        if (qtdIteracoes % 100 == 0){
           //logar tempos
           cout << "==================================" << endl;
           //logar linha e coluna permitidas encontradas
