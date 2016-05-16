@@ -121,7 +121,7 @@ void SimplexGPU::atualizarQuadro(Quadro *quadro, int colunaPerm, int linhaPerm){
   //os elementos da coluna correspondente a do elemento permissivel,
   //dessa forma, lancaremos 1 thread por linha para calcular esse fator
   //de anulacao, e calcular os elemetos da respectiva linha computada
-  SimplexGPUKernels::executarCalculoAlgoritmoTroca(quadro->totalLinhas, this->dev_matriz, linhaPerm, colunaPerm, quadro->totalColunas);
+  SimplexGPUKernels::executarCalculoAlgoritmoTroca(quadro->totalLinhas, this->dev_matriz, linhaPerm, colunaPerm, quadro->totalColunas, quadro->totalLinhas);
 
   //copiar quadro calculado device -> host
   cudaStatus = cudaMemcpy(quadro->matriz, dev_matriz, mallocSize, cudaMemcpyDeviceToHost);

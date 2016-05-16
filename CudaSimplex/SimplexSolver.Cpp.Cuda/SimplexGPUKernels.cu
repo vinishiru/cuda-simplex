@@ -32,13 +32,14 @@ void SimplexGPUKernels::executarCalcularQuocientesKernel(int numThreads, float *
 }
 
 
-__global__ void calculoAlgoritmoTroca(float *dev_matrizSuperior, int linhaPerm, int colunaPerm, int totalColunas)
+__global__ void calculoAlgoritmoTroca(float *dev_matrizSuperior, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
 {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   float fatorAnulador = 0.0;
 
+  //evitar operação em endereço invalido
   //se for indice da linha permissivel, desconsiderar
-  if (i == linhaPerm)
+  if (i > totalLinhas || i == linhaPerm)
     return;
 
   //computar fator anulador da respectiva linha
@@ -46,20 +47,24 @@ __global__ void calculoAlgoritmoTroca(float *dev_matrizSuperior, int linhaPerm, 
 
   //calcular os valores dos elementos da linha usando o fator anulador coletado
   for (int coluna = 0; coluna < totalColunas; coluna++){
+
+    if (i * totalColunas + coluna > totalLinhas * totalColunas)
+      return;
+
     //o valor da coluna permissivel sera 0
     if (coluna == colunaPerm)
       dev_matrizSuperior[i * totalColunas + coluna] = 0;
     else
       //os demais valores devem respeitar a equacao
-      //Valor = FatorAnulador * ValorLinhaPerm + LinhaAtual;
-      dev_matrizSuperior[i * totalColunas + coluna] = fatorAnulador *
-      dev_matrizSuperior[linhaPerm *totalColunas + coluna] +
-      dev_matrizSuperior[i * totalColunas + coluna];
+      //Valor = FatorAnulador * ValorRefLinhaPerm + LinhaAtual;
+      dev_matrizSuperior[i * totalColunas + coluna] = fatorAnulador 
+      * dev_matrizSuperior[linhaPerm * totalColunas + coluna]
+      + dev_matrizSuperior[i * totalColunas + coluna];
   }
 
 }
 
-void SimplexGPUKernels::executarCalculoAlgoritmoTroca(int numThreads, float *dev_matrizSuperior, int linhaPerm, int colunaPerm, int totalColunas)
+void SimplexGPUKernels::executarCalculoAlgoritmoTroca(int numThreads, float *dev_matrizSuperior, int linhaPerm, int colunaPerm, int totalColunas, int totalLinhas)
 {
   //verificar maneira de adaptar esse controle de forma dinamica
   int threadsPerBlock = 1024;
@@ -71,7 +76,7 @@ void SimplexGPUKernels::executarCalculoAlgoritmoTroca(int numThreads, float *dev
     blocksPerGrid = (numThreads + threadsPerBlock - 1) / threadsPerBlock;
 
 
-  calculoAlgoritmoTroca << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, linhaPerm, colunaPerm, totalColunas);
+  calculoAlgoritmoTroca << <blocksPerGrid, threadsPerBlock >> >(dev_matrizSuperior, linhaPerm, colunaPerm, totalColunas, totalLinhas);
   cudaDeviceSynchronize();
 }
 
