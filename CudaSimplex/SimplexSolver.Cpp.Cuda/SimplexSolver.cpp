@@ -50,6 +50,7 @@ void SimplexSolver::otimizar(FObjetivo *func){
     {
 
       //this->historico.push_back(this->status);
+      //this->quadro->toString();
 
       switch (this->status)
       {

@@ -14,6 +14,7 @@ public:
   void Stop();
 
   double Elapsed();
+  double Parcial();
 
 private:
   std::chrono::system_clock::time_point begin;

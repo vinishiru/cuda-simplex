@@ -1,4 +1,4 @@
-#include "SimplexSolver.h"
+#include "stdafx.h"
 
 void SimplexSolver::otimizar(ILPReader* reader){
   this->otimizar(reader->LerFuncaoObjetivo());
@@ -22,6 +22,10 @@ void SimplexSolver::otimizar(FObjetivo* func){
   this->swNormalizacao.Stop();
 
   int qtdIteracoes = 1;
+
+  //alocar vetores auxiliares da linha e coluna permissiveis
+  this->vec_colunaPerm = new float[this->quadro->totalLinhas];
+  this->vec_linhaPerm = new float[this->quadro->totalColunas];
 
   cout << endl;
 
@@ -47,8 +51,8 @@ void SimplexSolver::otimizar(FObjetivo* func){
       this->status != SolucaoImpossivel)
     {
 
-      this->historico.push_back(this->status);
-      this->quadro->toString();
+      //this->historico.push_back(this->status);
+      //this->quadro->toString();
 
       switch (this->status)
       {
@@ -107,7 +111,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
     this->swOtimizacao.Stop();
 
     //guardar ultimo status
-    this->historico.push_back(this->status);
+    //this->historico.push_back(this->status);
 
     //logada final
     //logar tempos
@@ -123,7 +127,7 @@ void SimplexSolver::otimizar(FObjetivo* func){
   }
   catch (exception e)
   {
-    cout << endl << "Ocorreu um erro no algoritmo!" << e.what() << endl;
+    cout << endl << "Ocorreu um erro no algoritmo! " << e.what() << endl;
   }
 
 }
@@ -221,26 +225,83 @@ StatusSimplex SimplexSolver::algoritmoSegundaEtapa(){
 
 void SimplexSolver::calcularLinhaPermissivel(){
 
-  float *vetorQuocientes;
   float menorQuociente = FLT_MAX;
+  float valorTermoLivre = 0.0;
+  float elemColPermissivel = 0.0;
+  float quocienteTemp = 0.0;
 
   //identificar a linha permissivel, verificando qual o menor quociente,
   //entre membros livres e a coluna permissivel
-  vetorQuocientes = simplexGPU.calcularQuocientes(this->quadro, this->colunaPerm);
 
-  //identificar qual menor valor positivo no vetor de quocientes
   for (int i = 1; i < this->quadro->totalLinhas; i++){
-    if (vetorQuocientes[i] > 0 && vetorQuocientes[i] < menorQuociente){
-      menorQuociente = vetorQuocientes[i];
-      this->linhaPerm = i;
+    valorTermoLivre = this->quadro->matrizSuperior[this->quadro->totalColunas * i];
+    elemColPermissivel = this->quadro->matrizSuperior[this->quadro->totalColunas * i + this->colunaPerm];
+
+    if (elemColPermissivel != 0){
+      quocienteTemp = valorTermoLivre / elemColPermissivel;
+      if (quocienteTemp > 0 && quocienteTemp < menorQuociente){
+        menorQuociente = quocienteTemp;
+        this->linhaPerm = i;
+      }
     }
+
   }
+}
+
+void SimplexSolver::alocarLinhaColunaPermissiveis(){
+
+  int maiorDim = this->quadro->totalColunas > this->quadro->totalLinhas ? this->quadro->totalColunas : this->quadro->totalLinhas;
+
+  for (int i = 0; i < maiorDim; i++){
+
+    if (i < this->quadro->totalLinhas)
+      this->vec_colunaPerm[i] = this->quadro->matrizSuperior[i * this->quadro->totalColunas + this->colunaPerm];
+
+    if (i < this->quadro->totalColunas)
+      this->vec_linhaPerm[i] = this->quadro->matrizSuperior[this->linhaPerm * this->quadro->totalColunas + i];
+
+  }
+
 }
 
 StatusSimplex SimplexSolver::algoritmoTroca(){
 
-  //executarl algoritmo de GPU para atualizar o quadro Simplex
-  simplexGPU.atualizarQuadro(this->quadro, this->colunaPerm, this->linhaPerm);
+  float tempElemento = 0.0;
+  float elePermissivel = this->quadro->matrizSuperior[this->linhaPerm * this->quadro->totalColunas + this->colunaPerm];
+
+  //alocar linha e coluna permissiveis
+  this->alocarLinhaColunaPermissiveis();
+
+  //percorrer toda a matriz e determinar os novos valores
+  for (int i = 0; i < this->quadro->totalLinhas; i++){
+    for (int j = 0; j < this->quadro->totalColunas; j++){
+      //calcular valores para cada situacao
+      if (i == this->linhaPerm && j == this->colunaPerm){
+        //calcular inverso do elemento permissivel
+        this->quadro->matrizSuperior[i * this->quadro->totalColunas + j] = 1 / elePermissivel;
+      }
+      else if (j == this->colunaPerm){
+        //se for elemento da coluna permissivel, calcular:
+        //elemento = elemento * - (EP Inverso)
+        this->quadro->matrizSuperior[i * this->quadro->totalColunas + j] = this->quadro->matrizSuperior[i * this->quadro->totalColunas + j]
+          * -1 * (1 / elePermissivel);
+      }
+      else if (i == this->linhaPerm){
+        //se for elemento da linha permissivel, calcular:
+        //element = elemento * (EP Inverso)
+        this->quadro->matrizSuperior[i * this->quadro->totalColunas + j] = this->quadro->matrizSuperior[i * this->quadro->totalColunas + j]
+          * (1 / elePermissivel);
+      }
+      else{
+        //os demais elementos, calcula-se
+        //tempElemento = (Elemento Correspondentes da Linha Perm)  * (Elemento Correspondente Inferior da Coluna Perm )
+        //elemento = elemento + tempElemento
+        tempElemento = this->vec_linhaPerm[j] * (this->vec_colunaPerm[i] * -1 / elePermissivel);
+        this->quadro->matrizSuperior[i * this->quadro->totalColunas + j] = this->quadro->matrizSuperior[i * this->quadro->totalColunas + j] + tempElemento;
+      }
+    }
+  }
+
 
   //trocar labels da linha e coluna permissiveis
   string rowLabel = this->quadro->rowHeader.at(this->linhaPerm);
